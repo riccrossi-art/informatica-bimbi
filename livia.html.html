@@ -289,9 +289,9 @@
   </header>
 
   <div class="nav-modules">
-    <button class="mod-btn active" onclick="showPanel('coding')">🧩 Lab Coding a Blocchi</button>
-    <button class="mod-btn" onclick="showPanel('binary')">🎨 Pixel & Codice Binario</button>
-    <button class="mod-btn" onclick="showPanel('cyber')">🔐 Sicurezza Password</button>
+    <button class="mod-btn active" onclick="showPanel('coding', this)">🧩 Lab Coding a Blocchi</button>
+    <button class="mod-btn" onclick="showPanel('binary', this)">🎨 Pixel & Codice Binario</button>
+    <button class="mod-btn" onclick="showPanel('cyber', this)">🔐 Sicurezza Password</button>
   </div>
 
   <main>
@@ -358,11 +358,14 @@
   </main>
 
   <script>
-    function showPanel(id) {
+    // Dichiarazione globale della funzione showPanel
+    function showPanel(id, btnElement) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      event.currentTarget.classList.add('active');
+      if(btnElement) {
+        btnElement.classList.add('active');
+      }
     }
 
     /* --- GAME ENGINE CODING LAB --- */
@@ -374,9 +377,8 @@
     ];
 
     let currentLevel = 0;
-    let robot = { r: 0, c: 0, dir: 1 }; // Dir: 0=Up, 1=Right, 2=Down, 3=Left
+    let robot = { r: 0, c: 0, dir: 1 };
     let program = [];
-    const dirsEmoji = ['⬆️', '➡️', '⬇️', '⬅️'];
 
     function loadLevel(idx) {
       currentLevel = idx;
@@ -476,7 +478,6 @@
           if(robot.dir === 2) nr++;
           if(robot.dir === 3) nc--;
 
-          // Check borders & walls
           if(nr >= 0 && nr < lvl.size && nc >= 0 && nc < lvl.size && !lvl.walls.some(w => w[0] === nr && w[1] === nc)) {
             robot.r = nr;
             robot.c = nc;
@@ -491,48 +492,4 @@
           robot.dir = (robot.dir + 1) % 4;
         } else if(cmd === 'COLLECT') {
           if(robot.r === lvl.star[0] && robot.c === lvl.star[1]) {
-            status.innerText = '🎉 Bravissima Livia! Codice eseguito con successo!';
-            status.style.color = '#10B981';
-            return;
-          } else {
-            status.innerText = '❌ Nessuna stella da raccogliere qui!';
-            status.style.color = '#EF4444';
-            return;
-          }
-        }
-        renderMaze();
-      }
-
-      if(robot.r !== lvl.star[0] || robot.c !== lvl.star[1]) {
-        status.innerText = '🤔 Il robot non è arrivato alla stella. Riprova!';
-        status.style.color = '#F59E0B';
-      }
-    }
-
-    /* --- PIXEL ART --- */
-    const pixelGrid = document.getElementById('pixelGrid');
-    const binaryDisplay = document.getElementById('binaryDisplay');
-
-    for(let i=0; i<16; i++) {
-      const p = document.createElement('div');
-      p.className = 'pixel';
-      p.innerText = '0';
-      p.onclick = () => {
-        p.classList.toggle('on');
-        p.innerText = p.classList.contains('on') ? '1' : '0';
-        updateBinary();
-      };
-      pixelGrid.appendChild(p);
-    }
-
-    function updateBinary() {
-      const pixels = document.querySelectorAll('.pixel');
-      let code = '';
-      pixels.forEach((p, idx) => {
-        code += p.innerText;
-        if((idx + 1) % 4 === 0) code += ' ';
-      });
-      binaryDisplay.innerText = code;
-    }
-
-    /* --- PASSWORD CHECKER --- */
+            status.innerText = '🎉 Bravissima Livia! Codice eseguito con
