@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laboratorio Digitale di Livia - Coding & Cyber</title>
+  <title>Laboratorio di Coding di Livia - Programmazione a Blocchi</title>
   <style>
     :root {
       --bg: #0F172A;
       --card-bg: #1E293B;
       --accent: #8B5CF6;
+      --accent-hover: #7C3AED;
+      --green: #10B981;
+      --orange: #F59E0B;
       --text: #F8FAFC;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -38,13 +41,16 @@
       color: #A78BFA;
       text-decoration: none;
       font-weight: bold;
+      background: rgba(167, 139, 250, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 0.8rem;
     }
 
-    .modules {
+    .nav-modules {
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       padding: 1rem;
-      max-width: 900px;
+      max-width: 950px;
       width: 100%;
       overflow-x: auto;
     }
@@ -58,6 +64,7 @@
       cursor: pointer;
       font-weight: bold;
       white-space: nowrap;
+      transition: all 0.2s;
     }
 
     .mod-btn.active {
@@ -66,7 +73,7 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 950px;
       width: 100%;
       padding: 1rem;
     }
@@ -74,14 +81,174 @@
     .panel {
       display: none;
       background: var(--card-bg);
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 1.5rem;
       border: 1px solid #334155;
     }
 
     .panel.active { display: block; }
 
-    /* Pixel Art Grid */
+    /* --- CODING LAB STYLES --- */
+    .level-select {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .level-btn {
+      background: #334155;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .level-btn.active { background: var(--green); }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .workspace { grid-template-columns: 1fr; }
+    }
+
+    .grid-container {
+      background: #0284C7;
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .maze-grid {
+      display: grid;
+      gap: 4px;
+      background: #0369A1;
+      padding: 6px;
+      border-radius: 0.8rem;
+    }
+
+    .cell {
+      width: 55px;
+      height: 55px;
+      background: #38BDF8;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .cell.wall { background: #0F172A; }
+
+    .block-palette {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .block-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .btn-cmd {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-forward { background: #2563EB; }
+    .btn-turn { background: #D97706; }
+    .btn-action { background: #10B981; }
+
+    .program-sequence {
+      background: #0F172A;
+      border: 2px dashed #475569;
+      border-radius: 0.8rem;
+      min-height: 140px;
+      padding: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-content: flex-start;
+    }
+
+    .code-block {
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .code-block .remove-btn {
+      color: #FCA5A5;
+      font-weight: bold;
+      margin-left: 0.3rem;
+    }
+
+    .controls-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn-run {
+      flex: 2;
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .btn-clear {
+      flex: 1;
+      background: #EF4444;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .status-msg {
+      margin-top: 0.8rem;
+      font-weight: bold;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    /* --- PIXEL ART STYLES --- */
     .pixel-grid {
       display: grid;
       grid-template-columns: repeat(4, 50px);
@@ -100,15 +267,10 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
-
     }
 
-    .pixel.on {
-      background: #10B981;
-      color: black;
-    }
+    .pixel.on { background: #10B981; color: black; }
 
-    /* Binary Output */
     .binary-code {
       background: #0284C7;
       padding: 1rem;
@@ -123,19 +285,62 @@
 
   <header>
     <a href="index.html" class="home-link">🏠 Torna alla Home</a>
-    <h2>🧪 Lab Digitale di Livia</h2>
+    <h2>🚀 Lab Programmazione di Livia</h2>
   </header>
 
-  <div class="modules">
-    <button class="mod-btn active" onclick="showPanel('binary')">🎨 Pixel Art & Binario</button>
-    <button class="mod-btn" onclick="showPanel('cyber')">🔐 Agente Segreto Cyber</button>
+  <div class="nav-modules">
+    <button class="mod-btn active" onclick="showPanel('coding')">🧩 Lab Coding a Blocchi</button>
+    <button class="mod-btn" onclick="showPanel('binary')">🎨 Pixel & Codice Binario</button>
+    <button class="mod-btn" onclick="showPanel('cyber')">🔐 Sicurezza Password</button>
   </div>
 
   <main>
-    <!-- MODULO BINARIO -->
-    <section id="binary" class="panel active">
+    <!-- MODULO 1: CODING A BLOCCHI -->
+    <section id="coding" class="panel active">
+      <h2>🧩 Esercizi di Programmazione</h2>
+      <p style="color: #94A3B8; margin-bottom: 1rem;">Crea la sequenza di comandi per guidare Byte 🤖 a raccogliere la stella 🌟!</p>
+
+      <div class="level-select">
+        <span>Seleziona Livello:</span>
+        <button class="level-btn active" onclick="loadLevel(0)">1</button>
+        <button class="level-btn" onclick="loadLevel(1)">2</button>
+        <button class="level-btn" onclick="loadLevel(2)">3</button>
+        <button class="level-btn" onclick="loadLevel(3)">4</button>
+      </div>
+
+      <div class="workspace">
+        <div class="grid-container">
+          <div class="maze-grid" id="mazeGrid"></div>
+        </div>
+
+        <div class="block-palette">
+          <h3>Blocchi Comandi:</h3>
+          <div class="block-buttons">
+            <button class="btn-cmd btn-forward" onclick="addBlock('MOVE')">⬆️ Avanza</button>
+            <button class="btn-cmd btn-turn" onclick="addBlock('LEFT')">↺ Gira Sinistra</button>
+            <button class="btn-cmd btn-turn" onclick="addBlock('RIGHT')">↻ Gira Destra</button>
+            <button class="btn-cmd btn-action" onclick="addBlock('COLLECT')">🌟 Raccogli</button>
+          </div>
+
+          <h3>Il tuo Algoritmo (Programma):</h3>
+          <div class="program-sequence" id="programSequence">
+            <span id="emptyHint" style="color: #64748B; font-size: 0.9rem;">Clicca sui blocchi sopra per aggiungerli...</span>
+          </div>
+
+          <div class="controls-bar">
+            <button class="btn-run" onclick="runProgram()">▶️ ESEGUI CODICE</button>
+            <button class="btn-clear" onclick="clearProgram()">🗑️ Cancella</button>
+          </div>
+
+          <div class="status-msg" id="statusMsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO 2: PIXEL ART & BINARIO -->
+    <section id="binary" class="panel">
       <h2>Laboratorio Codice Binario</h2>
-      <p>Clicca sui pixel per accenderli (1) o spegnerli (0). Vedi come il computer crea l'immagine!</p>
+      <p>Clicca sui pixel per accenderli (1) o spegnerli (0). Vedi come il computer trasforma le immagini in numeri!</p>
       
       <div class="pixel-grid" id="pixelGrid"></div>
 
@@ -143,11 +348,11 @@
       <div class="binary-code" id="binaryDisplay">0000 0000 0000 0000</div>
     </section>
 
-    <!-- MODULO CYBER -->
+    <!-- MODULO 3: CYBER SECURITY -->
     <section id="cyber" class="panel">
       <h2>Test Sicurezza Password</h2>
-      <p>Scrivi una password e scopri quanto è sicura!</p>
-      <input type="text" id="passInput" oninput="checkPass()" placeholder="Inserisci qui la password..." style="width: 100%; padding: 0.8rem; margin: 1rem 0; border-radius: 0.5rem; border: none;">
+      <p>Metti alla prova la tua password per scoprire se è a prova di hacker!</p>
+      <input type="text" id="passInput" oninput="checkPass()" placeholder="Inserisci qui una password..." style="width: 100%; padding: 0.8rem; margin: 1rem 0; border-radius: 0.5rem; border: none; font-size: 1rem;">
       <div id="passFeedback" style="font-weight: bold; font-size: 1.2rem;"></div>
     </section>
   </main>
@@ -160,9 +365,153 @@
       event.currentTarget.classList.add('active');
     }
 
-    /* PIXEL ART */
-    const grid = document.getElementById('pixelGrid');
-    const display = document.getElementById('binaryDisplay');
+    /* --- GAME ENGINE CODING LAB --- */
+    const levels = [
+      { size: 4, start: [0,0], dir: 1, star: [0,3], walls: [] }, // Level 1
+      { size: 4, start: [0,0], dir: 1, star: [2,2], walls: [] }, // Level 2
+      { size: 4, start: [0,0], dir: 1, star: [3,3], walls: [[1,1], [1,2]] }, // Level 3
+      { size: 5, start: [0,0], dir: 2, star: [4,4], walls: [[1,0],[1,1],[3,2],[3,3]] }  // Level 4
+    ];
+
+    let currentLevel = 0;
+    let robot = { r: 0, c: 0, dir: 1 }; // Dir: 0=Up, 1=Right, 2=Down, 3=Left
+    let program = [];
+    const dirsEmoji = ['⬆️', '➡️', '⬇️', '⬅️'];
+
+    function loadLevel(idx) {
+      currentLevel = idx;
+      document.querySelectorAll('.level-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+      resetLevelState();
+      clearProgram();
+    }
+
+    function resetLevelState() {
+      const lvl = levels[currentLevel];
+      robot = { r: lvl.start[0], c: lvl.start[1], dir: lvl.dir };
+      renderMaze();
+      document.getElementById('statusMsg').innerText = '';
+    }
+
+    function renderMaze() {
+      const lvl = levels[currentLevel];
+      const grid = document.getElementById('mazeGrid');
+      grid.style.gridTemplateColumns = `repeat(${lvl.size}, 55px)`;
+      grid.innerHTML = '';
+
+      for(let r=0; r<lvl.size; r++) {
+        for(let c=0; c<lvl.size; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          
+          const isWall = lvl.walls.some(w => w[0] === r && w[1] === c);
+          if(isWall) cell.classList.add('wall');
+
+          if(r === robot.r && c === robot.c) {
+            cell.innerText = '🤖';
+          } else if(r === lvl.star[0] && c === lvl.star[1]) {
+            cell.innerText = '🌟';
+          }
+
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    function addBlock(type) {
+      if(program.length >= 10) return;
+      program.push(type);
+      renderProgram();
+    }
+
+    function removeBlock(idx) {
+      program.splice(idx, 1);
+      renderProgram();
+    }
+
+    function clearProgram() {
+      program = [];
+      renderProgram();
+      resetLevelState();
+    }
+
+    function renderProgram() {
+      const seq = document.getElementById('programSequence');
+      seq.innerHTML = '';
+      if(program.length === 0) {
+        seq.innerHTML = '<span id="emptyHint" style="color: #64748B; font-size: 0.9rem;">Clicca sui blocchi sopra per aggiungerli...</span>';
+        return;
+      }
+
+      const labels = {
+        'MOVE': '⬆️ Avanza',
+        'LEFT': '↺ Sinistra',
+        'RIGHT': '↻ Destra',
+        'COLLECT': '🌟 Raccogli'
+      };
+
+      program.forEach((cmd, idx) => {
+        const block = document.createElement('div');
+        block.className = 'code-block';
+        block.innerHTML = `${labels[cmd]} <span class="remove-btn" onclick="removeBlock(${idx})">✕</span>`;
+        seq.appendChild(block);
+      });
+    }
+
+    async function runProgram() {
+      resetLevelState();
+      const status = document.getElementById('statusMsg');
+      const lvl = levels[currentLevel];
+
+      for(let i=0; i<program.length; i++) {
+        const cmd = program[i];
+        await new Promise(r => setTimeout(r, 500));
+
+        if(cmd === 'MOVE') {
+          let nr = robot.r;
+          let nc = robot.c;
+          if(robot.dir === 0) nr--;
+          if(robot.dir === 1) nc++;
+          if(robot.dir === 2) nr++;
+          if(robot.dir === 3) nc--;
+
+          // Check borders & walls
+          if(nr >= 0 && nr < lvl.size && nc >= 0 && nc < lvl.size && !lvl.walls.some(w => w[0] === nr && w[1] === nc)) {
+            robot.r = nr;
+            robot.c = nc;
+          } else {
+            status.innerText = '💥 Ops! Il robot ha urtato un ostacolo!';
+            status.style.color = '#EF4444';
+            return;
+          }
+        } else if(cmd === 'LEFT') {
+          robot.dir = (robot.dir + 3) % 4;
+        } else if(cmd === 'RIGHT') {
+          robot.dir = (robot.dir + 1) % 4;
+        } else if(cmd === 'COLLECT') {
+          if(robot.r === lvl.star[0] && robot.c === lvl.star[1]) {
+            status.innerText = '🎉 Bravissima Livia! Codice eseguito con successo!';
+            status.style.color = '#10B981';
+            return;
+          } else {
+            status.innerText = '❌ Nessuna stella da raccogliere qui!';
+            status.style.color = '#EF4444';
+            return;
+          }
+        }
+        renderMaze();
+      }
+
+      if(robot.r !== lvl.star[0] || robot.c !== lvl.star[1]) {
+        status.innerText = '🤔 Il robot non è arrivato alla stella. Riprova!';
+        status.style.color = '#F59E0B';
+      }
+    }
+
+    /* --- PIXEL ART --- */
+    const pixelGrid = document.getElementById('pixelGrid');
+    const binaryDisplay = document.getElementById('binaryDisplay');
 
     for(let i=0; i<16; i++) {
       const p = document.createElement('div');
@@ -173,7 +522,7 @@
         p.innerText = p.classList.contains('on') ? '1' : '0';
         updateBinary();
       };
-      grid.appendChild(p);
+      pixelGrid.appendChild(p);
     }
 
     function updateBinary() {
@@ -183,26 +532,7 @@
         code += p.innerText;
         if((idx + 1) % 4 === 0) code += ' ';
       });
-      display.innerText = code;
+      binaryDisplay.innerText = code;
     }
 
-    /* PASSWORD CHECKER */
-    function checkPass() {
-      const val = document.getElementById('passInput').value;
-      const feedback = document.getElementById('passFeedback');
-      if(val.length === 0) {
-        feedback.innerText = '';
-      } else if(val.length < 6) {
-        feedback.innerText = '🔴 Troppo Breve e Debole!';
-        feedback.style.color = '#EF4444';
-      } else if(val.length >= 8 && /[0-9]/.test(val) && /[A-Z]/.test(val)) {
-        feedback.innerText = '🟢 Super Password Fortissima!';
-        feedback.style.color = '#10B981';
-      } else {
-        feedback.innerText = '🟡 Media (Aggiungi numeri e lettere maiuscole!)';
-        feedback.style.color = '#F59E0B';
-      }
-    }
-  </script>
-</body>
-</html>
+    /* --- PASSWORD CHECKER --- */
