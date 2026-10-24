@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio Digitale di Livia - Coding & Cyber</title>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --accent: #8B5CF6;
+      --text: #F8FAFC;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: #1E1B4B;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .home-link {
+      color: #A78BFA;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .modules {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      max-width: 900px;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .mod-btn {
+      background: var(--card-bg);
+      color: white;
+      border: 1px solid #334155;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .mod-btn.active {
+      background: var(--accent);
+      border-color: #C4B5FD;
+    }
+
+    main {
+      max-width: 900px;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .panel {
+      display: none;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      border: 1px solid #334155;
+    }
+
+    .panel.active { display: block; }
+
+    /* Pixel Art Grid */
+    .pixel-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 50px);
+      gap: 5px;
+      margin: 1.5rem 0;
+      justify-content: center;
+    }
+
+    .pixel {
+      width: 50px;
+      height: 50px;
+      background: #334155;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+
+    }
+
+    .pixel.on {
+      background: #10B981;
+      color: black;
+    }
+
+    /* Binary Output */
+    .binary-code {
+      background: #0284C7;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: monospace;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="home-link">🏠 Torna alla Home</a>
+    <h2>🧪 Lab Digitale di Livia</h2>
+  </header>
+
+  <div class="modules">
+    <button class="mod-btn active" onclick="showPanel('binary')">🎨 Pixel Art & Binario</button>
+    <button class="mod-btn" onclick="showPanel('cyber')">🔐 Agente Segreto Cyber</button>
+  </div>
+
+  <main>
+    <!-- MODULO BINARIO -->
+    <section id="binary" class="panel active">
+      <h2>Laboratorio Codice Binario</h2>
+      <p>Clicca sui pixel per accenderli (1) o spegnerli (0). Vedi come il computer crea l'immagine!</p>
+      
+      <div class="pixel-grid" id="pixelGrid"></div>
+
+      <h3>Codice Binario Generato:</h3>
+      <div class="binary-code" id="binaryDisplay">0000 0000 0000 0000</div>
+    </section>
+
+    <!-- MODULO CYBER -->
+    <section id="cyber" class="panel">
+      <h2>Test Sicurezza Password</h2>
+      <p>Scrivi una password e scopri quanto è sicura!</p>
+      <input type="text" id="passInput" oninput="checkPass()" placeholder="Inserisci qui la password..." style="width: 100%; padding: 0.8rem; margin: 1rem 0; border-radius: 0.5rem; border: none;">
+      <div id="passFeedback" style="font-weight: bold; font-size: 1.2rem;"></div>
+    </section>
+  </main>
+
+  <script>
+    function showPanel(id) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    /* PIXEL ART */
+    const grid = document.getElementById('pixelGrid');
+    const display = document.getElementById('binaryDisplay');
+
+    for(let i=0; i<16; i++) {
+      const p = document.createElement('div');
+      p.className = 'pixel';
+      p.innerText = '0';
+      p.onclick = () => {
+        p.classList.toggle('on');
+        p.innerText = p.classList.contains('on') ? '1' : '0';
+        updateBinary();
+      };
+      grid.appendChild(p);
+    }
+
+    function updateBinary() {
+      const pixels = document.querySelectorAll('.pixel');
+      let code = '';
+      pixels.forEach((p, idx) => {
+        code += p.innerText;
+        if((idx + 1) % 4 === 0) code += ' ';
+      });
+      display.innerText = code;
+    }
+
+    /* PASSWORD CHECKER */
+    function checkPass() {
+      const val = document.getElementById('passInput').value;
+      const feedback = document.getElementById('passFeedback');
+      if(val.length === 0) {
+        feedback.innerText = '';
+      } else if(val.length < 6) {
+        feedback.innerText = '🔴 Troppo Breve e Debole!';
+        feedback.style.color = '#EF4444';
+      } else if(val.length >= 8 && /[0-9]/.test(val) && /[A-Z]/.test(val)) {
+        feedback.innerText = '🟢 Super Password Fortissima!';
+        feedback.style.color = '#10B981';
+      } else {
+        feedback.innerText = '🟡 Media (Aggiungi numeri e lettere maiuscole!)';
+        feedback.style.color = '#F59E0B';
+      }
+    }
+  </script>
+</body>
+</html>
