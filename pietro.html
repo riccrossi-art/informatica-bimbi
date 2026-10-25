@@ -20,6 +20,12 @@ main{width:100%;max-width:800px;padding:1rem;flex:1}
 .game-section{display:none;background:#fff;border-radius:2rem;padding:2rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.1);text-align:center;min-height:420px}
 .game-section.active{display:block}
 .hint{color:var(--muted);margin:.5rem 0 1rem}
+.fire-hud{display:flex;justify-content:center;gap:1.5rem;font-size:1.4rem;font-weight:bold;margin:.5rem 0}
+.fire-hud .low{color:#DC2626}
+.house-box.out{background:#DCFCE7;border-color:#86EFAC}
+.msg{font-size:1.4rem;font-weight:bold;min-height:2.2rem;margin:1rem 0 .5rem}
+.msg.win{color:#15803D}.msg.lose{color:#DC2626}
+.big-btn{background:#16A34A;border:none;color:#fff;font-weight:bold;font-size:1.4rem;border-radius:1.2rem;padding:.8rem 2rem}
 .score{margin-top:1.5rem;font-size:1.3rem;font-weight:bold;color:#15803D}
 
 .fire-station{display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
@@ -66,8 +72,11 @@ button:focus-visible{outline:3px solid #2563EB;outline-offset:2px}
 <main>
   <section id="fire" class="game-section active">
     <h2>🚒 Aiuta i Vigili del Fuoco!</h2>
-    <p class="hint">Tocca il fuoco per spegnerlo con l'acqua!</p>
+    <p class="hint" id="fireHint">Spegni tutte le casette prima che scada il tempo!</p>
+    <div class="fire-hud"><span>⭐ Livello <span id="fireLevel">1</span></span><span>⏱️ <span id="fireTime">30</span>s</span></div>
     <div class="fire-station" id="fireStation"></div>
+    <div class="msg" id="fireMsg" aria-live="polite"></div>
+    <button class="big-btn" id="fireBtn">▶️ Via!</button>
     <div class="score">Fuochi spenti: <span id="fireCount">0</span></div>
   </section>
 
@@ -116,6 +125,7 @@ $('muteBtn').onclick = e => {
 
 /* --- TAB --- */
 function switchTab(id) {
+  if (id !== 'fire' && fireState === 'playing') buildFire();
   document.querySelectorAll('.game-section').forEach(s => s.classList.toggle('active', s.id === id));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
 }
@@ -124,25 +134,91 @@ $('tabs').addEventListener('click', e => {
   if (b) switchTab(b.dataset.tab);
 });
 
-/* --- FUOCO --- */
-let fires = 0;
-for (let i = 1; i <= 3; i++) {
-  const b = document.createElement('button');
-  b.className = 'house-box burning';
-  b.innerHTML = `<span class="fire-icon">🔥</span><strong>Casetta ${i}</strong>`;
-  $('fireStation').appendChild(b);
+/* --- FUOCO: LIVELLI A TEMPO --- */
+const FIRE_SECONDS = 30, MAX_HOUSES = 12;
+let level = 1, fires = 0, fireState = 'ready', endAt = 0, timer = null;
+
+const housesFor = lv => Math.min(lv + 2, MAX_HOUSES);   // livello 1 = 3 casette, 2 = 4, ...
+
+function showTime(sec) {
+  $('fireTime').textContent = sec;
+  $('fireTime').parentElement.classList.toggle('low', sec <= 10 && fireState === 'playing');
 }
+
+function buildFire() {
+  clearInterval(timer);
+  fireState = 'ready';
+  const st = $('fireStation');
+  st.innerHTML = '';
+  for (let i = 1; i <= housesFor(level); i++) {
+    const b = document.createElement('button');
+    b.className = 'house-box burning';
+    b.innerHTML = `<span class="fire-icon">🔥</span><strong>Casetta ${i}</strong>`;
+    st.appendChild(b);
+  }
+  $('fireLevel').textContent = level;
+  $('fireMsg').textContent = '';
+  $('fireMsg').className = 'msg';
+  $('fireBtn').textContent = '▶️ Via!';
+  $('fireBtn').style.display = '';
+  $('fireHint').textContent = `Spegni tutte le ${housesFor(level)} casette in ${FIRE_SECONDS} secondi!`;
+  showTime(FIRE_SECONDS);
+}
+
+function endFire(won) {
+  clearInterval(timer);
+  fireState = won ? 'won' : 'lost';
+  const msg = $('fireMsg');
+  msg.className = 'msg ' + (won ? 'win' : 'lose');
+  if (won) {
+    msg.textContent = `🎉 Livello ${level} superato! Prossimo: ${housesFor(level + 1)} casette!`;
+    $('fireBtn').textContent = `➡️ Livello ${level + 1}`;
+    speak('Bravissimo Pietro! Hai vinto! Livello superato!');
+  } else {
+    msg.textContent = '⏰ Tempo scaduto! Riprova!';
+    $('fireBtn').textContent = '🔄 Riprova';
+    speak('Tempo scaduto! Riprova!');
+  }
+  $('fireBtn').style.display = '';
+  showTime(won ? Math.max(0, Math.ceil((endAt - Date.now()) / 1000)) : 0);
+}
+
+function tick() {
+  const left = Math.ceil((endAt - Date.now()) / 1000);
+  if (left <= 0) endFire(false); else showTime(left);
+}
+
+$('fireBtn').onclick = () => {
+  if (fireState === 'ready') {
+    fireState = 'playing';
+    endAt = Date.now() + FIRE_SECONDS * 1000;
+    $('fireBtn').style.display = 'none';
+    $('fireMsg').textContent = '🚒 Spegni, spegni, spegni!';
+    speak('Via!');
+    showTime(FIRE_SECONDS);
+    timer = setInterval(tick, 200);
+  } else if (fireState === 'won') {
+    level++;
+    buildFire();
+  } else if (fireState === 'lost') {
+    buildFire();
+  }
+};
+
 $('fireStation').addEventListener('click', e => {
   const house = e.target.closest('.house-box');
-  if (!house || !house.classList.contains('burning')) return;
+  if (!house || fireState !== 'playing' || !house.classList.contains('burning')) return;
   const icon = house.querySelector('.fire-icon');
   house.classList.remove('burning');
+  house.classList.add('out');
   icon.textContent = '💧';
+  setTimeout(() => { icon.textContent = '🏠'; }, 500);
   $('fireCount').textContent = ++fires;
-  speak('Acqua! Fuoco spento! Bravo Pietro!');
-  setTimeout(() => { icon.textContent = '🏠'; }, 800);
-  setTimeout(() => { icon.textContent = '🔥'; house.classList.add('burning'); }, 4000);
+  if (!document.querySelector('.house-box.burning')) endFire(true);
+  else speak('Spento!');
 });
+
+buildFire();
 
 /* --- TRENO --- */
 const MAX_WAGONS = 10;
