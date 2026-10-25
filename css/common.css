@@ -1,0 +1,5 @@
+/* Stili comuni a tutte le pagine (tema-indipendenti) */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%} /* evita lo zoom del testo ruotando l'iPad */
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation} /* niente zoom col doppio tocco */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
