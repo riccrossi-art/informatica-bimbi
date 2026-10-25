@@ -1,200 +1,222 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mondo di Pietro - Pompieri & Treni</title>
-<style>
-:root{--bg:#FEF2F2;--red:#EF4444;--text:#1E293B;--muted:#64748B}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Comic Sans MS','Chalkboard SE',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;min-height:100vh;min-height:100dvh}
-button{font:inherit;color:inherit;cursor:pointer}
-header{width:100%;background:#fff;padding:1rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;box-shadow:0 4px 6px -1px rgba(0,0,0,.1);border-bottom:4px solid var(--red)}
-.home-link{text-decoration:none;background:#FEE2E2;color:#991B1B;padding:.5rem 1rem;border-radius:1rem;font-weight:bold}
-.title-box{display:flex;align-items:center;gap:.5rem}
-.nav-tabs{display:flex;gap:.5rem;padding:1rem;overflow-x:auto;max-width:100%}
-.tab-btn{background:#fff;border:2px solid #CBD5E1;padding:.8rem 1.2rem;border-radius:1.5rem;font-size:1.05rem;font-weight:bold;white-space:nowrap}
-.tab-btn.active{border-color:var(--red);background:var(--red);color:#fff}
-main{width:100%;max-width:800px;padding:1rem;flex:1}
-.game-section{display:none;background:#fff;border-radius:2rem;padding:2rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.1);text-align:center;min-height:420px}
-.game-section.active{display:block}
-.hint{color:var(--muted);margin:.5rem 0 1rem}
-.msg{font-size:1.5rem;font-weight:bold;min-height:2.2rem;margin-top:1rem;color:#15803D}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mondo di Pietro - Pompieri & Treni</title>
+  <style>
+    :root {
+      --bg-color: #FEF2F2;
+      --card-bg: #FFFFFF;
+      --fire-red: #EF4444;
+      --train-blue: #0284C7;
+      --text: #1E293B;
+    }
 
-/* Fuoco */
-.fire-station{display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
-.house-box{background:#F8FAFC;border:3px solid #E2E8F0;border-radius:1.5rem;padding:1.5rem;width:150px;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
-.house-box.out{background:#DCFCE7;border-color:#86EFAC;cursor:default}
-.house-icon{font-size:4.5rem;line-height:1}
-.house-box:not(.out) .house-icon{animation:pulse .8s infinite alternate}
-@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.15)}}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Treno */
-.train-track{background:#E0F2FE;border-radius:1.5rem;padding:1.5rem;min-height:200px;display:flex;align-items:center;overflow-x:auto;border-bottom:8px solid #334155;margin-bottom:1.5rem}
-.train-track>:first-child{margin-left:auto}
-.train-track>:last-child{margin-right:auto}
-.train-part{font-size:3.5rem;white-space:nowrap;flex:none;animation:bounce .5s ease}
-@keyframes bounce{0%{transform:translateY(-30px);opacity:0}60%{transform:translateY(6px)}100%{transform:none;opacity:1}}
-.wagon-picker{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem}
-.wagon-btn{font-size:1.2rem;background:#F1F5F9;border:2px solid #94A3B8;border-radius:1rem;padding:.8rem 1rem}
-.wagon-btn.reset{background:var(--red);border-color:var(--red);color:#fff}
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', system-ui, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-/* Tastiera */
-.keyboard-box{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#FEF3C7;border-radius:1.5rem;padding:1.5rem;min-height:250px;margin:1rem 0}
-.key-display{font-size:3.5rem;font-weight:bold;color:#DC2626;line-height:1}
-.key-emoji{font-size:6rem;line-height:1.1;animation:pop .3s cubic-bezier(.175,.885,.32,1.275)}
-.key-meaning{font-size:1.8rem;font-weight:bold;color:#991B1B;margin-top:.5rem}
-@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
-.screen-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
-.screen-key{width:3rem;height:3rem;font-weight:bold;font-size:1.2rem;background:#fff;border:2px solid #CBD5E1;border-radius:.8rem}
+    header {
+      width: 100%;
+      background: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      border-bottom: 4px solid var(--fire-red);
+    }
 
-button:focus-visible{outline:3px solid #2563EB;outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}}
-</style>
+    .home-link {
+      text-decoration: none;
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+    }
+
+    .title-box { display: flex; align-items: center; gap: 0.5rem; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem;
+      overflow-x: auto;
+      max-width: 100vw;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 2px solid #CBD5E1;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      border-color: var(--fire-red);
+      background: var(--fire-red);
+      color: white;
+    }
+
+    main {
+      width: 100%;
+      max-width: 800px;
+      padding: 1rem;
+      flex: 1;
+    }
+
+    .game-section {
+      display: none;
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+      text-align: center;
+      min-height: 420px;
+    }
+
+    .game-section.active { display: block; }
+
+    /* GIOCO POMPIERI: SPEGNI IL FUOCO */
+    .fire-station {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .house-box {
+      background: #F8FAFC;
+      border: 3px solid #E2E8F0;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      width: 150px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .fire-icon {
+      font-size: 4.5rem;
+      animation: pulseFire 0.8s infinite alternate;
+    }
+
+    @keyframes pulseFire {
+      from { transform: scale(1); }
+      to { transform: scale(1.15); }
+    }
+
+    /* GIOCO TRENO: COMPONI IL TRENO */
+    .train-track {
+      background: #E0F2FE;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      border-bottom: 8px solid #334155;
+      margin-bottom: 1.5rem;
+    }
+
+    .train-part {
+      font-size: 4rem;
+      animation: bounce 0.5s ease;
+    }
+
+    .wagon-picker {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .wagon-btn {
+      font-size: 1.8rem;
+      background: #F1F5F9;
+      border: 2px solid #94A3B8;
+      border-radius: 1rem;
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* TASTIERA MAGICA TEMATICA */
+    .keyboard-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #FEF3C7;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      min-height: 250px;
+    }
+
+    .key-display {
+      font-size: 5rem;
+      font-weight: bold;
+      color: #DC2626;
+    }
+
+    .key-emoji {
+      font-size: 6.5rem;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .key-meaning {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #991B1B;
+      margin-top: 0.5rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <a href="index.html" class="home-link">🏠 Torna alla Home</a>
-  <div class="title-box"><span>🚒</span><h2>Il Mondo di Pietro</h2></div>
-</header>
-
-<nav class="nav-tabs" id="tabs">
-  <button class="tab-btn active" data-tab="fire">🚒 Spegni il Fuoco!</button>
-  <button class="tab-btn" data-tab="train">🚂 Il Treno di Pietro</button>
-  <button class="tab-btn" data-tab="keyboard">⌨️ Tastiera Pompieri & Treni</button>
-</nav>
-
-<main>
-  <section id="fire" class="game-section active">
-    <h2>🚒 Aiuta i Vigili del Fuoco!</h2>
-    <p class="hint">Tocca il fuoco per spegnerlo con l'acqua!</p>
-    <div class="fire-station" id="fireStation"></div>
-    <div class="msg" id="fireMsg" aria-live="polite"></div>
-    <button class="wagon-btn reset" id="fireReset" style="display:none;margin-top:1rem">🔄 Di nuovo!</button>
-  </section>
-
-  <section id="train" class="game-section">
-    <h2>🚂 Aggancia i Vagoni al Treno!</h2>
-    <p class="hint">Tocca i vagoni sotto per aggiungerli alla locomotiva</p>
-    <div class="train-track" id="trainTrack"></div>
-    <div class="wagon-picker">
-      <button class="wagon-btn" data-wagon="🔴🚃">🔴 Vagone Rosso</button>
-      <button class="wagon-btn" data-wagon="🟡🚃">🟡 Vagone Giallo</button>
-      <button class="wagon-btn" data-wagon="📦📦">📦 Merci</button>
-      <button class="wagon-btn reset" id="trainReset">🔄 Riparti</button>
+  <header>
+    <a href="index.html" class="home-link">🏠 Torna alla Home</a>
+    <div class="title-box">
+      <span>🚒</span>
+      <h2>Il Mondo di Pietro</h2>
     </div>
-    <div class="msg" id="trainMsg" aria-live="polite"></div>
-  </section>
+  </header>
 
-  <section id="keyboard" class="game-section">
-    <h2>Premi un Tasto qualsiasi!</h2>
-    <p class="hint">Sulla tastiera, oppure tocca le lettere qui sotto</p>
-    <div class="keyboard-box" aria-live="polite">
-      <div class="key-display" id="keyDisplay">⌨️</div>
-      <div class="key-emoji" id="keyEmoji">👆</div>
-      <div class="key-meaning" id="keyMeaning">Tocca un tasto!</div>
-    </div>
-    <div class="screen-keys" id="screenKeys"></div>
-  </section>
-</main>
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('fire')">🚒 Spegni il Fuoco!</button>
+    <button class="tab-btn" onclick="switchTab('train')">🚂 Il Treno di Pietro</button>
+    <button class="tab-btn" onclick="switchTab('keyboard')">⌨️ Tastiera Pompieri & Treni</button>
+  </nav>
 
-<script>
-const $ = id => document.getElementById(id);
-
-/* --- TAB --- */
-function switchTab(id) {
-  document.querySelectorAll('.game-section').forEach(s => s.classList.toggle('active', s.id === id));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
-}
-$('tabs').addEventListener('click', e => {
-  const b = e.target.closest('.tab-btn');
-  if (b) switchTab(b.dataset.tab);
-});
-
-/* --- FUOCO --- */
-const HOUSES = 3;
-function buildFire() {
-  const st = $('fireStation');
-  st.innerHTML = '';
-  for (let i = 1; i <= HOUSES; i++) {
-    const b = document.createElement('button');
-    b.className = 'house-box';
-    b.innerHTML = `<span class="house-icon">🔥</span><strong>Casetta ${i}</strong>`;
-    st.appendChild(b);
-  }
-  $('fireMsg').textContent = '';
-  $('fireReset').style.display = 'none';
-}
-$('fireStation').addEventListener('click', e => {
-  const box = e.target.closest('.house-box');
-  if (!box || box.classList.contains('out')) return;
-  box.classList.add('out');
-  box.querySelector('.house-icon').textContent = '💦';
-  setTimeout(() => { box.querySelector('.house-icon').textContent = '🏠'; }, 500);
-  if (document.querySelectorAll('.house-box.out').length === HOUSES) {
-    $('fireMsg').textContent = '🎉 Bravo Pietro! Hai spento tutti i fuochi!';
-    $('fireReset').style.display = 'inline-block';
-  }
-});
-$('fireReset').onclick = buildFire;
-
-/* --- TRENO --- */
-const MAX_WAGONS = 10;
-let wagons = 0;
-function addPart(text) {
-  const s = document.createElement('span');
-  s.className = 'train-part';
-  s.textContent = text;
-  $('trainTrack').appendChild(s);
-  s.scrollIntoView({ inline: 'end', block: 'nearest' });
-}
-function resetTrain() {
-  $('trainTrack').innerHTML = '';
-  wagons = 0;
-  $('trainMsg').textContent = '';
-  addPart('🚂');
-}
-document.querySelector('.wagon-picker').addEventListener('click', e => {
-  const b = e.target.closest('[data-wagon]');
-  if (!b) return;
-  if (wagons >= MAX_WAGONS) { $('trainMsg').textContent = '🚉 Che treno lunghissimo! Premi Riparti.'; return; }
-  addPart(b.dataset.wagon);
-  wagons++;
-  $('trainMsg').textContent = wagons === MAX_WAGONS ? '🎉 Treno completo! Ciuf ciuf!' : '';
-});
-$('trainReset').onclick = resetTrain;
-
-/* --- TASTIERA --- */
-const KEYS = {
-  F: ['🔥', 'Fuoco!'], A: ['💧', 'Acqua!'], P: ['👨‍🚒', 'Pompiere!'],
-  S: ['🚨', 'Sirena!'], E: ['🧯', 'Estintore!'], I: ['🚒', 'Camion dei pompieri!'],
-  T: ['🚂', 'Treno!'], C: ['🚃', 'Carrozza!'], R: ['🛤️', 'Rotaie!'],
-  V: ['🚦', 'Semaforo!'], L: ['🪜', 'Scala!'], G: ['🚉', 'Stazione!']
-};
-function showKey(k) {
-  const up = k.toUpperCase();
-  const [emoji, text] = KEYS[up] || (/\d/.test(up) ? ['🔢', 'Numero ' + up] : ['⭐', 'Bravo!']);
-  $('keyDisplay').textContent = up;
-  // riavvia l'animazione
-  const em = $('keyEmoji');
-  em.style.animation = 'none'; void em.offsetWidth; em.style.animation = '';
-  em.textContent = emoji;
-  $('keyMeaning').textContent = text;
-}
-$('screenKeys').innerHTML = Object.keys(KEYS).map(k => `<button class="screen-key" data-k="${k}">${k}</button>`).join('');
-$('screenKeys').addEventListener('click', e => {
-  if (e.target.dataset.k) showKey(e.target.dataset.k);
-});
-document.addEventListener('keydown', e => {
-  if (!$('keyboard').classList.contains('active')) return;
-  if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1 || e.key === ' ') return;
-  showKey(e.key);
-});
-
-/* --- AVVIO --- */
-buildFire();
-resetTrain();
-</script>
-</body>
-</html>
+  <main>
