@@ -13,11 +13,32 @@ Funziona direttamente nel browser, senza installare nulla, anche su iPad.
 
 ## 🎮 Contenuti
 
-| Pagina | Per chi | Cosa c'è dentro |
+| Pagina | Per chi | Sezioni |
 |---|---|---|
 | [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Tutti | Home con i collegamenti ai giochi e la nota per i genitori |
-| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco a livelli e a tempo, Il Treno di Pietro, Tastiera Pompieri & Treni con voce |
-| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi con il robot Byte, codice binario con i pixel, test di sicurezza delle password |
+| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco, Il Treno di Pietro, Tastiera Pompieri & Treni |
+| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi, Pixel & Codice Binario, Sicurezza Password, English Words, Listen & Pick Colors |
+
+## 🗂️ Struttura del progetto
+
+Ogni gioco ha il suo file JavaScript e il suo file CSS. Le pagine HTML contengono solo la struttura e collegano i file che servono.
+
+```
+index.html              home (collegamenti ai giochi)
+pietro.html             pagina di Pietro
+livia.html              pagina di Livia
+css/
+  common.css            stili comuni (reset, pulsanti, iPad)
+  pietro/               base, fuoco, treno, tastiera
+  livia/                base, coding, binario, inglese
+js/
+  common.js             voce, schede, funzioni condivise
+  pietro/               fuoco.js, treno.js, tastiera.js
+  livia/                coding.js, binario.js, password.js,
+                        inglese-parole.js, inglese-colori.js
+```
+
+**Come aggiungere un gioco**: crea `js/<pagina>/nuovo.js` (e, se serve, `css/<pagina>/nuovo.css`), aggiungi la sezione e il pulsante della scheda nella pagina HTML e collega i due file. I giochi si accorgono del cambio scheda con l'evento `tabchange` (vedi `js/common.js`).
 
 > I nomi dei file devono coincidere con i link nella home. GitHub Pages distingue maiuscole e minuscole.
 
@@ -63,6 +84,7 @@ poi vai su `http://localhost:8000`.
 ## ✅ Prima di ogni push
 
 - [ ] I link tra le pagine funzionano (inclusi "🏠 Torna alla Home")
+- [ ] Le cartelle `css/` e `js/` sono incluse nel commit
 - [ ] Nomi dei file in minuscolo e senza spazi
 - [ ] Provato in verticale e in orizzontale su iPad (o con la simulazione iPad di Safari)
 - [ ] Voce e suoni partono solo dopo un tocco
