@@ -124,15 +124,41 @@
     }
 
     /* Keyboard Game */
-    .key-display {
-      font-size: 6rem;
-      height: 150px;
+    .keyboard-box {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: #FEF3C7;
-      border-radius: 1rem;
-      margin-bottom: 1rem;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      min-height: 250px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .key-display {
+      font-size: 5rem;
+      font-weight: bold;
+      color: #D97706;
+      margin-bottom: 0.5rem;
+    }
+
+    .key-emoji {
+      font-size: 6rem;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .key-meaning {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #B45309;
+      margin-top: 0.5rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     /* Robot Maze */
@@ -200,9 +226,14 @@
 
     <!-- GIOCO 2: TASTIERA -->
     <section id="keyboard" class="game-section">
-      <h2>Premi un Tasto o Tocca Schermo!</h2>
-      <div class="key-display" id="keyDisplay">❓</div>
-      <p id="keyMeaning" style="font-size: 1.5rem; font-weight: bold; color: var(--primary);"></p>
+      <h2>Premi un Tasto qualsiasi sulla Tastiera!</h2>
+      <p style="color: #64748B; margin-bottom: 1rem;">Ogni lettera sblocca un animale o un oggetto magico</p>
+      
+      <div class="keyboard-box">
+        <div class="key-display" id="keyDisplay">❓</div>
+        <div class="key-emoji" id="keyEmoji">🌟</div>
+        <p class="key-meaning" id="keyMeaning">Premi un tasto!</p>
+      </div>
     </section>
 
     <!-- GIOCO 3: ROBOT MAZE -->
@@ -247,19 +278,63 @@
       area.appendChild(b);
     }
 
-    /* KEYBOARD GAME */
-    const keysMap = {'A':'🍎 Ape', 'B':'🎈 Borsa', 'C':'🐶 Cane', 'D':'🐬 Delfino'};
+    /* KEYBOARD GAME - ALPHABET MAP */
+    const alphaMap = {
+      'A': { text: 'Ape', emoji: '🐝' },
+      'B': { text: 'Banna / Borsa', emoji: '🍌' },
+      'C': { text: 'Cane', emoji: '🐶' },
+      'D': { text: 'Delfino', emoji: '🐬' },
+      'E': { text: 'Elefante', emoji: '🐘' },
+      'F': { text: 'Farfalla', emoji: '🦋' },
+      'G': { text: 'Gatto', emoji: '🐱' },
+      'H': { text: 'Hotel', emoji: '🏨' },
+      'I': { text: 'Isola', emoji: '🏝️' },
+      'J': { text: 'Jolly', emoji: '🃏' },
+      'K': { text: 'Koala', emoji: '🐨' },
+      'L': { text: 'Leone', emoji: '🦁' },
+      'M': { text: 'Mela', emoji: '🍎' },
+      'N': { text: 'Nave', emoji: '🚢' },
+      'O': { text: 'Orso', emoji: '🐻' },
+      'P': { text: 'Pinguino', emoji: '🐧' },
+      'Q': { text: 'Quadro', emoji: '🖼️' },
+      'R': { text: 'Razzo', emoji: '🚀' },
+      'S': { text: 'Stella', emoji: '⭐' },
+      'T': { text: 'Treno', emoji: '🚂' },
+      'U': { text: 'Uva', emoji: '🍇' },
+      'V': { text: 'Volpe', emoji: '🦊' },
+      'W': { text: 'Wagone', emoji: '🚃' },
+      'X': { text: 'Xilofono', emoji: '🎹' },
+      'Y': { text: 'Yogurt', emoji: '🥛' },
+      'Z': { text: 'Zebra', emoji: '🦓' },
+      '0': { text: 'Zero', emoji: '0️⃣' },
+      '1': { text: 'Uno', emoji: '1️⃣' },
+      '2': { text: 'Due', emoji: '2️⃣' },
+      '3': { text: 'Tre', emoji: '3️⃣' },
+      '4': { text: 'Quattro', emoji: '4️⃣' },
+      '5': { text: 'Cinque', emoji: '5️⃣' },
+      '6': { text: 'Sei', emoji: '6️⃣' },
+      '7': { text: 'Sette', emoji: '7️⃣' },
+      '8': { text: 'Otto', emoji: '8️⃣' },
+      '9': { text: 'Nove', emoji: '9️⃣' }
+    };
+
     window.addEventListener('keydown', (e) => {
+      // Se si trova nella schermata della tastiera o ovunque prema
       const char = e.key.toUpperCase();
       const display = document.getElementById('keyDisplay');
+      const emojiElem = document.getElementById('keyEmoji');
       const meaning = document.getElementById('keyMeaning');
-      if(keysMap[char]) {
+
+      if(alphaMap[char]) {
         display.innerText = char;
-        meaning.innerText = keysMap[char];
-        speak(char + ' come ' + keysMap[char]);
+        emojiElem.innerText = alphaMap[char].emoji;
+        meaning.innerText = char + ' come ' + alphaMap[char].text;
+        speak(char + ', ' + alphaMap[char].text);
       } else {
         display.innerText = char;
-        meaning.innerText = 'Ottimo!';
+        emojiElem.innerText = '✨';
+        meaning.innerText = 'Ottimo tasto!';
+        speak('Fantastico!');
       }
     });
 
@@ -299,6 +374,7 @@
 
     function speak(text) {
       if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Ferma eventuali voci precedenti
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'it-IT';
         window.speechSynthesis.speak(msg);
