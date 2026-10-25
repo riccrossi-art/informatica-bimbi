@@ -17,7 +17,7 @@ Funziona direttamente nel browser, senza installare nulla, anche su iPad.
 |---|---|---|
 | [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Tutti | Home con i collegamenti ai giochi e la nota per i genitori |
 | [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco, Il Treno di Pietro, Tastiera Pompieri & Treni |
-| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi, Pixel & Codice Binario, Sicurezza Password, English Words, Listen & Pick Colors |
+| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi, English Words, Listen & Pick Colors |
 
 ## 🗂️ Struttura del progetto
 
@@ -30,13 +30,15 @@ livia.html              pagina di Livia
 css/
   common.css            stili comuni (reset, pulsanti, iPad)
   pietro/               base, fuoco, treno, tastiera
-  livia/                base, coding, binario, inglese
+  livia/                base, coding, inglese (binario.css non collegato)
 js/
   common.js             voce, schede, funzioni condivise
   pietro/               fuoco.js, treno.js, tastiera.js
-  livia/                coding.js, binario.js, password.js,
-                        inglese-parole.js, inglese-colori.js
+  livia/                coding.js, inglese-parole.js, inglese-colori.js
+                        (binario.js e password.js: nascosti, non collegati)
 ```
+
+**Giochi nascosti**: Pixel & Codice Binario e Sicurezza Password sono ancora nel repository ma non compaiono in `livia.html`. Per riattivarli, ripristina nella pagina il pulsante della scheda, la sezione HTML (`id="binary"` e `id="cyber"`) e i collegamenti a `binario.css`, `binario.js` e `password.js`.
 
 **Come aggiungere un gioco**: crea `js/<pagina>/nuovo.js` (e, se serve, `css/<pagina>/nuovo.css`), aggiungi la sezione e il pulsante della scheda nella pagina HTML e collega i due file. I giochi si accorgono del cambio scheda con l'evento `tabchange` (vedi `js/common.js`).
 
@@ -46,7 +48,8 @@ js/
 
 - **Coding a blocchi**: 4 livelli, programma fino a 14 blocchi, robot con freccia di direzione e blocco in esecuzione evidenziato.
 - **Spegni il Fuoco**: si parte da 3 casette e 30 secondi. Se le spegni tutte in tempo passi al livello successivo (4 casette, poi 5 e così via, fino a 12).
-- **Inglese**: parole e colori con pronuncia tramite sintesi vocale del browser.
+- **English Words a livelli**: 5 livelli che salgono dopo 5 risposte giuste al primo tentativo. Si parte da 3 scelte con disegno (Beginner), poi 4 scelte (Explorer), senza disegno (Reader), ascoltando la parola (Listener) e infine scrivendola con le lettere (Spelling Star). Il livello raggiunto resta salvato sul dispositivo.
+- **Listen & Pick Colors**: si ascolta il colore in inglese e si tocca il cerchio giusto.
 - **Tastiera di Pietro**: ogni lettera A-Z e ogni numero ha un'immagine a tema pompieri e treni, anche con tasti sullo schermo per tablet.
 - **Pulsante 🔊/🔇** per silenziare la voce nel gioco di Pietro.
 
