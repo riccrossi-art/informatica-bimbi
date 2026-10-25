@@ -2,14 +2,22 @@
 
 Piccola raccolta di giochi educativi in **HTML, CSS e JavaScript puro**: nessun framework, nessuna dipendenza, nessun server. Pubblicata con **GitHub Pages**.
 
+## 👉 Provalo online
+
+**[Accademia Informatica Bimbi - Pietro & Livia](https://riccrossi-art.github.io/informatica-bimbi/index.html)**
+
+- 🚒 [Il Mondo di Pietro](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) (3 anni e mezzo)
+- 🚀 [Il Lab di Livia](https://riccrossi-art.github.io/informatica-bimbi/livia.html) (7 anni)
+
+Funziona direttamente nel browser, senza installare nulla, anche su iPad.
+
 ## 🎮 Contenuti
 
 | Pagina | Per chi | Cosa c'è dentro |
 |---|---|---|
-| `lab-programmazione.html` | Livia | Coding a blocchi con il robot Byte, codice binario con i pixel, test di sicurezza delle password |
-| `lab-livia-english.html` | Livia | Coding a blocchi, English Words (12 parole) e Listen & Pick Colors |
-| `mondo-di-pietro-v2.html` | Pietro | Spegni il Fuoco a livelli e a tempo, Il Treno di Pietro, Tastiera Pompieri & Treni con voce |
-| `index.html` | Tutti | Home con i collegamenti ai giochi |
+| [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Tutti | Home con i collegamenti ai giochi e la nota per i genitori |
+| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco a livelli e a tempo, Il Treno di Pietro, Tastiera Pompieri & Treni con voce |
+| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi con il robot Byte, codice binario con i pixel, test di sicurezza delle password |
 
 > I nomi dei file devono coincidere con i link nella home. GitHub Pages distingue maiuscole e minuscole.
 
