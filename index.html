@@ -15,12 +15,14 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #F8FAFC;
       color: var(--text);
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -69,21 +71,18 @@
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
       position: relative;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
-    .card-pietro {
-      background: var(--pietro-bg);
-      border-color: #FECACA;
-    }
+    .card-pietro { background: var(--pietro-bg); border-color: #FECACA; }
+    .card-livia { background: var(--livia-bg); border-color: #DDD6FE; }
 
-    .card-livia {
-      background: var(--livia-bg);
-      border-color: #DDD6FE;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    /* L'effetto "sollevamento" solo dove c'è il mouse: su iPad resterebbe attivo dopo il tocco */
+    @media (hover: hover) {
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
     }
 
     .avatar {
@@ -161,6 +160,8 @@
       color: #94A3B8;
       font-size: 0.9rem;
     }
+
+    @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
   </style>
 </head>
 <body>
@@ -177,7 +178,7 @@
         <div class="avatar">🚒</div>
         <h2>Pietro</h2>
         <div class="age-badge">3 Anni e Mezzo</div>
-        <p>Tra autopompe e ferrovie: spegni il fuoco con l'acqua, componi il treno dei vagoni e scopri la tastiera magica a tema Vigili del Fuoco e Treni!</p>
+        <p>Tra autopompe e ferrovie: spegni il fuoco con l'acqua a livelli sempre più difficili, componi il treno dei vagoni e scopri la tastiera magica a tema Vigili del Fuoco e Treni!</p>
         <span class="btn">Entra nel Mondo di Pietro 🚀</span>
       </a>
 
@@ -186,7 +187,7 @@
         <div class="avatar">🚀</div>
         <h2>Livia</h2>
         <div class="age-badge">7 Anni</div>
-        <p>Laboratorio informatico: coding a blocchi per guidare il robot nel labirinto, pixel art con codice binario e test di sicurezza delle password!</p>
+        <p>Laboratorio informatico: coding a blocchi per guidare il robot nel labirinto, parole inglesi a livelli che crescono e colori da ascoltare e riconoscere!</p>
         <span class="btn">Entra nel Lab di Livia 🧪</span>
       </a>
     </div>
@@ -195,8 +196,8 @@
       <h3>📌 Nota per i Genitori</h3>
       <ul>
         <li>I giochi sono progettati senza pubblicità e funzionano direttamente nel browser.</li>
-        <li>Tutti i progressi rimangono salvati localmente su questo dispositivo.</li>
-        <li>Sviluppato per supportare la coordinazione, la logica e la sicurezza digitale in modo divertente!</li>
+        <li>Il livello raggiunto in inglese resta salvato sul dispositivo; non viene inviato a nessuno.</li>
+        <li>Sviluppato per supportare la coordinazione, la logica e l'inglese in modo divertente!</li>
       </ul>
     </div>
   </main>

@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/livia/base.css">
 <link rel="stylesheet" href="css/livia/coding.css">
-<link rel="stylesheet" href="css/livia/binario.css">
 <link rel="stylesheet" href="css/livia/inglese.css">
 </head>
 <body>
@@ -18,8 +17,6 @@
 
 <div class="nav-modules" id="nav">
   <button class="mod-btn active" data-panel="coding">🧩 Lab Coding a Blocchi</button>
-  <button class="mod-btn" data-panel="binary">🎨 Pixel & Codice Binario</button>
-  <button class="mod-btn" data-panel="cyber">🔐 Sicurezza Password</button>
   <button class="mod-btn" data-panel="englishWords">🔤 English Words</button>
   <button class="mod-btn" data-panel="englishColors">🌈 Listen & Pick Colors</button>
 </div>
@@ -54,29 +51,24 @@
     </div>
   </section>
 
-  <section id="binary" class="panel">
-    <h2>🎨 Laboratorio Codice Binario</h2>
-    <p>Clicca sui pixel per accenderli (1) o spegnerli (0). Vedi come il computer trasforma le immagini in numeri!</p>
-    <div class="pixel-grid" id="pixelGrid"></div>
-    <h3>Codice Binario Generato:</h3>
-    <div class="binary-code" id="binaryDisplay">0000 0000 0000 0000</div>
-  </section>
-
-  <section id="cyber" class="panel">
-    <h2>🔐 Test Sicurezza Password</h2>
-    <p>Metti alla prova la tua password per scoprire se è a prova di hacker!</p>
-    <input type="text" id="passInput" placeholder="Inserisci qui una password..." style="width:100%;padding:.8rem;margin:1rem 0;border-radius:.5rem;border:none;font-size:1rem">
-    <div id="passFeedback" style="font-weight:bold;font-size:1.2rem"></div>
-  </section>
-
   <section id="englishWords" class="panel">
     <h2>🔤 Impara le Parole in Inglese!</h2>
-    <p class="sub">Come si dice questa parola in Inglese?</p>
+    <div class="word-hud">
+      <span>⭐ Livello <span id="wLevel">1</span>: <span id="wLevelName"></span></span>
+      <div class="word-bar" id="wBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="wBarFill"></div></div>
+      <span id="wProgress">0/5</span>
+    </div>
+    <p class="sub" id="wordPrompt"></p>
     <div class="word-card">
       <div class="word-emoji" id="wordEmoji"></div>
       <div class="word-ita" id="wordIta"></div>
+      <button class="speak-btn" id="wordSpeak" hidden>🔊 Ascolta</button>
     </div>
     <div class="options-grid" id="optionsGrid"></div>
+    <div id="tileArea" hidden>
+      <div class="answer-slots" id="slots"></div>
+      <div class="letter-tiles" id="tiles"></div>
+    </div>
     <div class="status-msg" id="wordStatus" style="margin-top:1.5rem;font-size:1.2rem" aria-live="polite"></div>
   </section>
 
@@ -91,8 +83,6 @@
 
 <script src="js/common.js"></script>
 <script src="js/livia/coding.js"></script>
-<script src="js/livia/binario.js"></script>
-<script src="js/livia/password.js"></script>
 <script src="js/livia/inglese-parole.js"></script>
 <script src="js/livia/inglese-colori.js"></script>
 <script>initTabs('nav', '.mod-btn', 'panel', '.panel');</script>
