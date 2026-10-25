@@ -1,0 +1,15 @@
+/* Livia: tema, header, schede */
+:root{--bg:#0F172A;--card:#1E293B;--accent:#8B5CF6;--green:#10B981;--pink:#EC4899;--text:#F8FAFC}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center}
+header{width:100%;background:#1E1B4B;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-bottom:2px solid var(--accent)}
+.home-link{color:#A78BFA;text-decoration:none;font-weight:bold;background:rgba(167,139,250,.1);padding:.5rem 1rem;border-radius:.8rem}
+.nav-modules{display:flex;gap:.8rem;padding:1rem;max-width:950px;width:100%;overflow-x:auto}
+.mod-btn{background:var(--card);border:1px solid #334155;padding:.8rem 1.2rem;border-radius:1rem;font-weight:bold;white-space:nowrap}
+.mod-btn.active{background:var(--accent);border-color:#C4B5FD}
+main{max-width:950px;width:100%;padding:1rem}
+.panel{display:none;background:var(--card);padding:1.5rem;border-radius:1.5rem;border:1px solid #334155}
+.panel.active{display:block}
+.sub{color:#94A3B8;margin-bottom:1rem}
+button:disabled{opacity:.5;cursor:not-allowed}
+.status-msg{margin-top:.8rem;font-weight:bold;text-align:center;min-height:24px}
+button:focus-visible{outline:3px solid #FDE047;outline-offset:2px}
