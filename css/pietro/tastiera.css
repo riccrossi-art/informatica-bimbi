@@ -1,0 +1,8 @@
+/* Pietro: Tastiera Pompieri & Treni */
+.keyboard-box{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#FEF3C7;border-radius:1.5rem;padding:1.5rem;min-height:250px;margin-bottom:1rem}
+.key-display{font-size:4rem;font-weight:bold;color:#DC2626;line-height:1}
+.key-emoji{font-size:6rem;line-height:1.1;animation:pop .3s cubic-bezier(.175,.885,.32,1.275)}
+.key-meaning{font-size:1.6rem;font-weight:bold;color:#991B1B;margin-top:.5rem}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+.screen-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem}
+.screen-key{width:2.8rem;height:2.8rem;font-weight:bold;background:#fff;border:2px solid #CBD5E1;border-radius:.7rem}

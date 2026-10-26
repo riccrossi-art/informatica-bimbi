@@ -1,0 +1,9 @@
+/* Pietro: Il Treno */
+.train-track{background:#E0F2FE;border-radius:1.5rem;padding:1.5rem;min-height:200px;display:flex;align-items:center;gap:.5rem;overflow-x:auto;border-bottom:8px solid #334155;margin-bottom:1.5rem}
+.train-track>:first-child{margin-left:auto}
+.train-track>:last-child{margin-right:auto}
+.train-part{font-size:3.5rem;flex:none;white-space:nowrap;animation:bounce .5s ease}
+@keyframes bounce{0%{transform:translateY(-30px);opacity:0}60%{transform:translateY(6px)}100%{transform:none;opacity:1}}
+.wagon-picker{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem}
+.wagon-btn{font-size:1.2rem;background:#F1F5F9;border:2px solid #94A3B8;border-radius:1rem;padding:.8rem 1rem;font-weight:bold}
+.wagon-btn.reset{background:var(--red);border-color:var(--red);color:#fff}

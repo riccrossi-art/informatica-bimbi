@@ -1,0 +1,14 @@
+/* Pietro: Spegni il Fuoco */
+.fire-hud{display:flex;justify-content:center;gap:1.5rem;font-size:1.4rem;font-weight:bold;margin:.5rem 0}
+.fire-hud .low{color:#DC2626}
+.house-box.out{background:#DCFCE7;border-color:#86EFAC}
+.msg{font-size:1.4rem;font-weight:bold;min-height:2.2rem;margin:1rem 0 .5rem}
+.msg.win{color:#15803D}
+.msg.lose{color:#DC2626}
+.big-btn{background:#16A34A;border:none;color:#fff;font-weight:bold;font-size:1.4rem;border-radius:1.2rem;padding:.8rem 2rem}
+.score{margin-top:1.5rem;font-size:1.3rem;font-weight:bold;color:#15803D}
+.fire-station{display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
+.house-box{background:#F8FAFC;border:3px solid #E2E8F0;border-radius:1.5rem;padding:1.5rem;width:150px;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
+.fire-icon{font-size:4.5rem;line-height:1}
+.house-box.burning .fire-icon{animation:pulse .8s infinite alternate}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.15)}}
