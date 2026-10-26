@@ -13,10 +13,12 @@ let muted = false;
 function speak(text, lang = 'it-IT') {
   if (!('speechSynthesis' in window)) return false;
   if (muted) return true;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang;
-  speechSynthesis.speak(u);
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    speechSynthesis.speak(u);
+  } catch (e) { return false; }
   return true;
 }
 const speakEn = text => speak(text, 'en-US');
