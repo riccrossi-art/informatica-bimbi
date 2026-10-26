@@ -6,7 +6,7 @@
 @media(max-width:768px){.workspace{grid-template-columns:1fr}}
 .grid-container{background:#0284C7;border-radius:1rem;padding:1rem;display:flex;align-items:center;justify-content:center}
 .maze-grid{display:grid;gap:4px;background:#0369A1;padding:6px;border-radius:.8rem}
-.cell{width:55px;height:55px;background:#38BDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
+.cell{width:var(--cell,55px);height:var(--cell,55px);background:#38BDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
 .cell.wall{background:#0F172A}
 .cell .arrow{position:absolute;top:1px;right:4px;font-size:.8rem;color:#0F172A}
 .block-palette{display:flex;flex-direction:column;gap:.8rem}
@@ -22,3 +22,21 @@
 .controls-bar{display:flex;gap:.5rem;margin-top:.5rem}
 .btn-run{flex:2;background:var(--green);border:none;padding:.8rem;border-radius:.8rem;font-weight:bold;font-size:1.1rem}
 .btn-clear{flex:1;background:#EF4444;border:none;padding:.8rem;border-radius:.8rem;font-weight:bold}
+
+/* Mondi, livelli e stelle */
+.world-bar{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;margin-bottom:.6rem}
+.world{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
+.world-name{font-weight:bold;margin-right:.3rem}
+.level-btn{min-width:48px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.level-btn small{font-size:.6rem;line-height:1}
+.level-btn.done:not(.active){background:#475569}
+/* Blocco Ripeti */
+.btn-repeat{background:#DB2777}.btn-close{background:#475569}
+.rep-block{flex:1 1 100%;background:#BE185D;border-radius:.6rem;padding:.5rem;display:flex;flex-direction:column;gap:.4rem}
+.rep-block.open{outline:3px solid #FDE047}
+.rep-head{display:flex;align-items:center;gap:.5rem;font-weight:bold;font-size:.9rem}
+.rep-btn{width:40px;height:40px;border-radius:50%;border:none;background:#fff;color:#BE185D;font-size:1.3rem;font-weight:bold}
+.rep-body{display:flex;flex-wrap:wrap;gap:.4rem;min-height:2.4rem;background:rgba(0,0,0,.25);border-radius:.5rem;padding:.4rem}
+.empty-hint{color:#94A3B8;font-size:.85rem}
+.code-block.sel{outline:3px solid #FDE047}
+.btn-next{background:#2563EB;border:none;padding:.8rem;border-radius:.8rem;font-weight:bold;font-size:1.1rem;margin-top:.5rem}
