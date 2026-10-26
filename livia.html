@@ -17,6 +17,7 @@
 
 <div class="nav-modules" id="nav">
   <button class="mod-btn active" data-panel="coding">🧩 Lab Coding a Blocchi</button>
+  <button class="mod-btn" data-panel="debug">🔎 Trova l'errore</button>
   <button class="mod-btn" data-panel="englishWords">🔤 English Words</button>
   <button class="mod-btn" data-panel="englishColors">🌈 Listen & Pick Colors</button>
 </div>
@@ -25,11 +26,8 @@
   <section id="coding" class="panel active">
     <h2>🧩 Esercizi di Programmazione</h2>
     <p class="sub">Crea la sequenza di comandi per guidare Byte 🤖 a raccogliere la stella 🌟! (la freccia ▲▶▼◀ indica dove guarda)</p>
-    <div class="level-select">
-      <span>Seleziona Livello:</span>
-      <button class="level-btn active">1</button><button class="level-btn">2</button>
-      <button class="level-btn">3</button><button class="level-btn">4</button>
-    </div>
+    <div class="world-bar" id="levelSelect"></div>
+    <p class="sub" id="levelInfo"></p>
     <div class="workspace">
       <div class="grid-container"><div class="maze-grid" id="mazeGrid"></div></div>
       <div class="block-palette">
@@ -39,6 +37,8 @@
           <button class="btn-cmd btn-turn" data-cmd="LEFT">↺ Gira Sinistra</button>
           <button class="btn-cmd btn-turn" data-cmd="RIGHT">↻ Gira Destra</button>
           <button class="btn-cmd btn-action" data-cmd="COLLECT">🌟 Raccogli</button>
+          <button class="btn-cmd btn-repeat" id="repeatBtn" data-cmd="REPEAT" hidden>🔁 Ripeti</button>
+          <button class="btn-cmd btn-close" id="closeRepBtn" hidden>✔️ Fine ripeti</button>
         </div>
         <h3>Il tuo Algoritmo (<span id="counter">0</span>/<span id="maxBlocks"></span>):</h3>
         <div class="program-sequence" id="programSequence"></div>
@@ -47,6 +47,33 @@
           <button class="btn-clear" id="clearBtn">🗑️ Cancella</button>
         </div>
         <div class="status-msg" id="statusMsg"></div>
+        <button class="btn-next" id="nextLevelBtn" hidden>➡️ Livello successivo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="debug" class="panel">
+    <h2>🔎 Trova l'errore!</h2>
+    <p class="sub">Byte ha un programma sbagliato. Tocca il blocco che non va, cambialo o toglilo (nei cicli puoi cambiare il numero), poi premi Prova!</p>
+    <div class="workspace">
+      <div class="grid-container"><div class="maze-grid" id="dbgGrid"></div></div>
+      <div class="block-palette">
+        <h3>Programma di Byte (errore <span id="dbgNum">1</span>/<span id="dbgTotal">7</span>):</h3>
+        <div class="program-sequence" id="dbgProgram"></div>
+        <h3>Cambia il blocco scelto in:</h3>
+        <div class="block-buttons" id="dbgFix">
+          <button class="btn-cmd btn-forward" data-fix="MOVE">⬆️ Avanza</button>
+          <button class="btn-cmd btn-turn" data-fix="LEFT">↺ Gira Sinistra</button>
+          <button class="btn-cmd btn-turn" data-fix="RIGHT">↻ Gira Destra</button>
+          <button class="btn-cmd btn-action" data-fix="COLLECT">🌟 Raccogli</button>
+          <button class="btn-cmd btn-clear" data-fix="REMOVE">🗑️ Togli il blocco</button>
+        </div>
+        <div class="controls-bar">
+          <button class="btn-run" id="dbgRun">▶️ PROVA</button>
+          <button class="btn-clear" id="dbgReset">↩️ Ricomincia</button>
+        </div>
+        <div class="status-msg" id="dbgStatus"></div>
+        <button class="btn-next" id="dbgNext" hidden>➡️ Prossimo errore</button>
       </div>
     </div>
   </section>
@@ -82,7 +109,9 @@
 </main>
 
 <script src="js/common.js"></script>
+<script src="js/livia/robot.js"></script>
 <script src="js/livia/coding.js"></script>
+<script src="js/livia/debug.js"></script>
 <script src="js/livia/inglese-parole.js"></script>
 <script src="js/livia/inglese-colori.js"></script>
 <script>initTabs('nav', '.mod-btn', 'panel', '.panel');</script>
