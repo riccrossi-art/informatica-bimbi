@@ -36,7 +36,7 @@ js/
   common.js             voce, schede, funzioni condivise
   quiz.js               motore dei quiz a livelli (stelle, livelli, riavvio)
   pietro/               fuoco.js, treno.js, matematica.js, inglese.js, tastiera.js
-  livia/                robot.js (motore e livelli), coding.js, debug.js,
+  livia/                robot.js (motore, livelli e robot Byte), coding.js, debug.js,
                         matematica.js, inglese-parole.js
                         (binario.js e password.js: nascosti, non collegati)
 ```
@@ -58,7 +58,7 @@ js/
 - **Logica e Matematica (Livia)**: 5 livelli che salgono con le risposte giuste: addizioni e sottrazioni fino a 20, serie di numeri, tabelline, numeri e segni mancanti, e infine problemi, intrusi e confronti.
 - **Conta e Completa (Pietro)**: contare i mezzi dei pompieri e dei treni, completare serie di disegni e capire dove ce n'è di più o di meno. Nessuna lettura richiesta, con la voce.
 - **Inglese con Pietro**: si ascolta una parola in inglese e si tocca l'immagine giusta: colori, animali, pompieri e treni, numeri.
-- **Il Treno di Pietro**: il capostazione chiede un treno con vagoni in un certo ordine (8 missioni); in alternativa si costruisce liberamente. Alla partenza il treno viaggia per circa 5 secondi attraverso un paesaggio a strati (nuvole, montagne, vulcano, campagna con mucche e pecore, ponte, fabbrica, caserma dei pompieri), sbuffa e arriva in stazione con una pioggia di stelle.
+- **Il Treno di Pietro**: il capostazione chiede un treno con vagoni in un certo ordine (8 missioni); in alternativa si costruisce liberamente. Alla partenza il treno viaggia per circa 5 secondi tra alberi e case, sbuffa e arriva in stazione con una pioggia di stelle.
 - **Tastiera di Pietro**: ogni lettera A-Z e ogni numero ha un'immagine a tema pompieri e treni, anche con tasti sullo schermo per tablet.
 - **Pulsante 🔊/🔇** per silenziare la voce nel gioco di Pietro.
 

@@ -40,3 +40,14 @@
 .empty-hint{color:#94A3B8;font-size:.85rem}
 .code-block.sel{outline:3px solid #FDE047}
 .btn-next{background:#2563EB;border:none;padding:.8rem;border-radius:.8rem;font-weight:bold;font-size:1.1rem;margin-top:.5rem}
+
+/* Byte: corpo con occhi sul davanti e freccia gialla che indica dove guarda */
+.maze-grid{position:relative}
+.byte{position:absolute;width:var(--cell,55px);height:var(--cell,55px);display:flex;align-items:center;justify-content:center;transition:left .35s ease,top .35s ease,transform .35s ease;z-index:2;pointer-events:none}
+.byte-body{position:relative;width:72%;height:72%;border-radius:24%;background:#6366F1;border:3px solid #fff;box-shadow:0 3px 6px rgba(0,0,0,.35)}
+.byte-body::before{content:'';position:absolute;left:50%;top:-16px;transform:translateX(-50%);border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:13px solid #FACC15;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
+.byte-body i{position:absolute;top:16%;width:26%;height:26%;border-radius:50%;background:radial-gradient(circle at 50% 28%,#1E293B 36%,#fff 38%)}
+.byte-body i:first-child{left:16%}
+.byte-body i:last-child{right:16%}
+.byte-body::after{content:'';position:absolute;left:30%;right:30%;bottom:16%;height:8%;border-radius:4px;background:#fff;opacity:.85}
+.byte.hit .byte-body{background:#EF4444}

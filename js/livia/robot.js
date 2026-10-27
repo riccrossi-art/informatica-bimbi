@@ -34,7 +34,7 @@ const Byte = (() => {
   ];
 
   const count = p => p.reduce((n, b) => n + (typeof b === 'string' ? 1 : 1 + b.body.length), 0);
-  const newRobot = lv => ({ r: lv.start[0], c: lv.start[1], dir: lv.dir });
+  const newRobot = lv => ({ r: lv.start[0], c: lv.start[1], dir: lv.dir, angle: lv.dir * 90 });
 
   function expand(p) {                       // programma -> comandi uno per uno (con riferimento al blocco)
     const out = [];
@@ -46,8 +46,8 @@ const Byte = (() => {
   }
 
   function exec(lv, rb, cmd) {               // 'ok' | 'wall' | 'win' | 'nostar'
-    if (cmd === LEFT_) { rb.dir = (rb.dir + 3) % 4; return 'ok'; }
-    if (cmd === RIGHT_) { rb.dir = (rb.dir + 1) % 4; return 'ok'; }
+    if (cmd === LEFT_) { rb.dir = (rb.dir + 3) % 4; rb.angle -= 90; return 'ok'; }
+    if (cmd === RIGHT_) { rb.dir = (rb.dir + 1) % 4; rb.angle += 90; return 'ok'; }
     if (cmd === COLLECT_) return rb.r === lv.star[0] && rb.c === lv.star[1] ? 'win' : 'nostar';
     const nr = rb.r + DR[rb.dir], nc = rb.c + DC[rb.dir];
     if (nr < 0 || nr >= lv.size || nc < 0 || nc >= lv.size || lv.walls.some(w => w[0] === nr && w[1] === nc)) return 'wall';
@@ -64,6 +64,14 @@ const Byte = (() => {
 
   const stars = (lv, p) => { const n = count(p), b = count(lv.sol); return n <= b ? 3 : n <= b + 2 ? 2 : 1; };
 
+  // Byte è un elemento sopra la griglia: si sposta e ruota con un'animazione, così si vede dove guarda
+  function place(grid, lv, rb) {
+    const byte = grid.querySelector('.byte'), cell = grid.children[rb.r * lv.size + rb.c];
+    byte.style.left = cell.offsetLeft + 'px';
+    byte.style.top = cell.offsetTop + 'px';
+    byte.style.transform = `rotate(${rb.angle}deg)`;
+    return byte;
+  }
   function renderMaze(grid, lv, rb) {
     grid.style.setProperty('--cell', lv.size > 5 ? '46px' : '55px');
     grid.style.gridTemplateColumns = `repeat(${lv.size}, var(--cell))`;
@@ -72,15 +80,18 @@ const Byte = (() => {
       const cell = document.createElement('div');
       cell.className = 'cell';
       if (lv.walls.some(w => w[0] === r && w[1] === c)) cell.classList.add('wall');
-      if (r === rb.r && c === rb.c) {
-        cell.textContent = '🤖';
-        const a = document.createElement('span');
-        a.className = 'arrow';
-        a.textContent = ARROWS[rb.dir];
-        cell.appendChild(a);
-      } else if (r === lv.star[0] && c === lv.star[1]) cell.textContent = '🌟';
+      else if (r === lv.star[0] && c === lv.star[1]) cell.textContent = '🌟';
       grid.appendChild(cell);
     }
+    const byte = document.createElement('div');
+    byte.className = 'byte';
+    byte.setAttribute('aria-label', 'Byte il robot');
+    byte.innerHTML = '<div class="byte-body"><i></i><i></i></div>';
+    grid.appendChild(byte);
+    byte.style.transition = 'none';
+    place(grid, lv, rb);
+    void byte.offsetWidth;
+    byte.style.transition = '';
   }
 
   async function play(lv, p, grid, onStep) {  // esegue con animazione
@@ -90,7 +101,8 @@ const Byte = (() => {
       if (onStep) onStep(s);
       await new Promise(r => setTimeout(r, 450));
       const res = exec(lv, rb, s.cmd);
-      renderMaze(grid, lv, rb);
+      const byte = place(grid, lv, rb);
+      if (res === 'wall') byte.classList.add('hit');
       if (res !== 'ok') return res;
     }
     return 'end';
