@@ -6,22 +6,35 @@
 .order-train{font-size:1.8rem;white-space:nowrap;overflow-x:auto;max-width:100%}
 #missionNum{font-size:.85rem;color:#92400E;font-weight:bold}
 .railway{position:relative;overflow:hidden;height:230px;border-radius:1.5rem;background:linear-gradient(#BAE6FD 62%,#86EFAC 62%);border-bottom:8px solid #334155;margin-bottom:1rem}
-.scenery{position:absolute;left:0;bottom:70px;width:300%;display:flex;justify-content:space-around;font-size:2.4rem;pointer-events:none}
-.railway.go .scenery{animation:scenery 3.2s ease-in-out forwards}
-@keyframes scenery{from{transform:translateX(0)}to{transform:translateX(-66.6%)}}
+/* Paesaggio a strati: scorre verso destra perché la locomotiva 🚂 guarda a sinistra */
+.layer{position:absolute;left:0;display:flex;justify-content:space-around;align-items:flex-end;white-space:nowrap;pointer-events:none}
+.clouds{top:8px;width:200%;font-size:2rem;transform:translateX(-20%)}
+.hills{bottom:87px;width:250%;font-size:3.4rem;transform:translateX(-32%);opacity:.9}
+.midlayer{bottom:50px;width:400%;font-size:2.6rem;transform:translateX(-40%)}
+.near{bottom:14px;width:600%;font-size:1.8rem;transform:translateX(-50%)}
+.midlayer span:first-child{font-size:3.8rem}
+.railway.go .clouds{animation:l-clouds 5.4s ease-in-out forwards}
+.railway.go .hills{animation:l-hills 5.4s ease-in-out forwards}
+.railway.go .midlayer{animation:l-mid 5.4s ease-in-out forwards}
+.railway.go .near{animation:l-near 5.4s ease-in-out forwards}
+.railway.arrived .layer{transform:none}
+@keyframes l-clouds{from{transform:translateX(-20%)}to{transform:none}}
+@keyframes l-hills{from{transform:translateX(-32%)}to{transform:none}}
+@keyframes l-mid{from{transform:translateX(-40%)}to{transform:none}}
+@keyframes l-near{from{transform:translateX(-50%)}to{transform:none}}
 .train-track{position:absolute;left:0;right:0;bottom:8px;display:flex;align-items:flex-end;overflow-x:auto;padding:0 1rem}
 .train-track>:first-child{margin-left:auto}
 .train-track>:last-child{margin-right:auto}
 .train-part{font-size:2.4rem;flex:none;white-space:nowrap;position:relative}
 .train-part.new{animation:bounce .5s ease}
 .train-part.wrong{animation:shake .5s}
-.loco::after{content:'💨';position:absolute;top:-1.2rem;left:-.5rem;font-size:1.4rem;opacity:0}
+.loco::after{content:'💨';position:absolute;top:-1.1rem;left:.3rem;font-size:1.4rem;opacity:0}
 .railway.go .loco::after{opacity:1;animation:puff .7s infinite}
 .railway.go .train-part{animation:chug .25s infinite alternate}
 @keyframes bounce{0%{transform:translateY(-30px);opacity:0}60%{transform:translateY(6px)}100%{transform:none;opacity:1}}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 @keyframes chug{to{transform:translateY(-3px)}}
-@keyframes puff{from{transform:translate(0,0) scale(.6);opacity:.9}to{transform:translate(-14px,-22px) scale(1.2);opacity:0}}
+@keyframes puff{from{transform:translate(0,0) scale(.6);opacity:.9}to{transform:translate(22px,-24px) scale(1.3);opacity:0}}
 .confetti{position:absolute;top:-1.5rem;font-size:1.6rem;animation:fall 1.8s linear forwards}
 @keyframes fall{to{transform:translateY(260px) rotate(360deg)}}
 .wagon-picker{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;margin-bottom:.8rem}

@@ -31,6 +31,7 @@
       $('missionNum').textContent = `Missione ${mission + 1} di ${MISSIONS.length}`;
     }
     setStatus(msg, '');
+    rail.classList.remove('arrived');
     render();
   }
   function confetti() {
@@ -60,10 +61,10 @@
     }
     going = true;
     setStatus(msg, '');
-    rail.classList.remove('go'); void rail.offsetWidth; rail.classList.add('go');
+    rail.classList.remove('go', 'arrived'); void rail.offsetWidth; rail.classList.add('go');
     speak('Ciuf ciuf! Si parte!');
-    await sleep(3300);
-    rail.classList.remove('go');
+    await sleep(5500);
+    rail.classList.remove('go'); rail.classList.add('arrived');   // resta davanti alla stazione
     confetti();
     if (mode === 'mission') {
       const last = mission === MISSIONS.length - 1;
