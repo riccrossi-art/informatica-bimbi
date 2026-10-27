@@ -16,8 +16,8 @@ Funziona direttamente nel browser, senza installare nulla, anche su iPad.
 | Pagina | Per chi | Sezioni |
 |---|---|---|
 | [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Tutti | Home con i collegamenti ai giochi e la nota per i genitori |
-| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco, Il Treno di Pietro, Tastiera Pompieri & Treni |
-| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi, English Words, Listen & Pick Colors |
+| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco, Il Treno di Pietro (missioni), Conta e Completa, Inglese con Pietro, Tastiera Pompieri & Treni |
+| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi (12 livelli), Trova l'errore, Logica e Matematica, English Words |
 
 ## 🗂️ Struttura del progetto
 
@@ -29,16 +29,21 @@ pietro.html             pagina di Pietro
 livia.html              pagina di Livia
 css/
   common.css            stili comuni (reset, pulsanti, iPad)
+  quiz.css              stili dei quiz a livelli
   pietro/               base, fuoco, treno, tastiera
   livia/                base, coding, inglese (binario.css non collegato)
 js/
   common.js             voce, schede, funzioni condivise
-  pietro/               fuoco.js, treno.js, tastiera.js
-  livia/                coding.js, inglese-parole.js, inglese-colori.js
+  quiz.js               motore dei quiz a livelli (stelle, livelli, riavvio)
+  pietro/               fuoco.js, treno.js, matematica.js, inglese.js, tastiera.js
+  livia/                robot.js (motore e livelli), coding.js, debug.js,
+                        matematica.js, inglese-parole.js
                         (binario.js e password.js: nascosti, non collegati)
 ```
 
 **Giochi nascosti**: Pixel & Codice Binario e Sicurezza Password sono ancora nel repository ma non compaiono in `livia.html`. Per riattivarli, ripristina nella pagina il pulsante della scheda, la sezione HTML (`id="binary"` e `id="cyber"`) e i collegamenti a `binario.css`, `binario.js` e `password.js`.
+
+**Aggiungere o cambiare livelli**: i livelli di Byte sono nell'elenco `LEVELS` di `js/livia/robot.js`. Ogni livello ha una soluzione di riferimento (`sol`) che decide le 3 stelle e il massimo di blocchi (`max`). Gli errori da trovare sono in `PUZZLES` di `js/livia/debug.js`.
 
 **Come aggiungere un gioco**: crea `js/<pagina>/nuovo.js` (e, se serve, `css/<pagina>/nuovo.css`), aggiungi la sezione e il pulsante della scheda nella pagina HTML e collega i due file. I giochi si accorgono del cambio scheda con l'evento `tabchange` (vedi `js/common.js`).
 
@@ -46,10 +51,14 @@ js/
 
 ## ✨ Funzionalità principali
 
-- **Coding a blocchi**: 4 livelli, programma fino a 14 blocchi, robot con freccia di direzione e blocco in esecuzione evidenziato.
+- **Coding a blocchi**: 12 livelli in 3 mondi (🌳 Bosco, 🏙️ Città, 🚀 Spazio). Dal mondo Città c'è il blocco **🔁 Ripeti**, e il limite di blocchi obbliga a usarlo. Da 1 a 3 stelle in base ai blocchi usati (3 stelle = il minimo), i livelli si sbloccano uno dopo l'altro e i progressi restano salvati sul dispositivo.
+- **Trova l'errore**: 7 programmi di Byte sbagliati da correggere (cambiando o togliendo un blocco, oppure il numero di ripetizioni).
 - **Spegni il Fuoco**: si parte da 3 casette e 30 secondi. Se le spegni tutte in tempo passi al livello successivo (4 casette, poi 5 e così via, fino a 12).
-- **English Words a livelli**: 5 livelli che salgono dopo 5 risposte giuste al primo tentativo. Si parte da 3 scelte con disegno (Beginner), poi 4 scelte (Explorer), senza disegno (Reader), ascoltando la parola (Listener) e infine scrivendola con le lettere (Spelling Star). Il livello raggiunto resta salvato sul dispositivo.
-- **Listen & Pick Colors**: si ascolta il colore in inglese e si tocca il cerchio giusto.
+- **English Words a livelli**: 5 livelli che salgono dopo 5 risposte giuste al primo tentativo. Si parte da 3 scelte con disegno (Beginner), poi 4 scelte (Explorer), senza disegno (Reader), ascoltando la parola (Listener) e infine scrivendola con le lettere (Spelling Star). Il livello raggiunto resta salvato sul dispositivo. Il vocabolario ha oltre 120 parole in 3 fasce di difficoltà: le parole escono a caso, mai quelle appena viste, e il gioco ricorda quelle già incontrate (anche nelle partite successive) per variare sempre. Tra un livello e l'altro compare una schermata che spiega la novità, e un pulsante **🔄 Dal livello 1** (con doppio tocco di conferma) permette di ricominciare.
+- **Logica e Matematica (Livia)**: 5 livelli che salgono con le risposte giuste: addizioni e sottrazioni fino a 20, serie di numeri, tabelline, numeri e segni mancanti, e infine problemi, intrusi e confronti.
+- **Conta e Completa (Pietro)**: contare i mezzi dei pompieri e dei treni, completare serie di disegni e capire dove ce n'è di più o di meno. Nessuna lettura richiesta, con la voce.
+- **Inglese con Pietro**: si ascolta una parola in inglese e si tocca l'immagine giusta: colori, animali, pompieri e treni, numeri.
+- **Il Treno di Pietro**: il capostazione chiede un treno con vagoni in un certo ordine (8 missioni); in alternativa si costruisce liberamente. Alla partenza il treno corre tra gli alberi, sbuffa e arriva in stazione con una pioggia di stelle.
 - **Tastiera di Pietro**: ogni lettera A-Z e ogni numero ha un'immagine a tema pompieri e treni, anche con tasti sullo schermo per tablet.
 - **Pulsante 🔊/🔇** per silenziare la voce nel gioco di Pietro.
 

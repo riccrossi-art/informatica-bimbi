@@ -1,9 +1,30 @@
 /* Pietro: Il Treno */
-.train-track{background:#E0F2FE;border-radius:1.5rem;padding:1.5rem;min-height:200px;display:flex;align-items:center;gap:.5rem;overflow-x:auto;border-bottom:8px solid #334155;margin-bottom:1.5rem}
+.train-modes{display:flex;justify-content:center;gap:.6rem;margin:.8rem 0}
+.mode-btn{background:#fff;border:2px solid #CBD5E1;border-radius:1.5rem;padding:.6rem 1.2rem;font-weight:bold;min-height:48px}
+.mode-btn.active{background:#0284C7;border-color:#0284C7;color:#fff}
+.order-card{background:#FEF3C7;border:2px dashed #F59E0B;border-radius:1.2rem;padding:.8rem 1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap}
+.order-train{font-size:1.8rem;white-space:nowrap;overflow-x:auto;max-width:100%}
+#missionNum{font-size:.85rem;color:#92400E;font-weight:bold}
+.railway{position:relative;overflow:hidden;height:230px;border-radius:1.5rem;background:linear-gradient(#BAE6FD 62%,#86EFAC 62%);border-bottom:8px solid #334155;margin-bottom:1rem}
+.scenery{position:absolute;left:0;bottom:70px;width:300%;display:flex;justify-content:space-around;font-size:2.4rem;pointer-events:none}
+.railway.go .scenery{animation:scenery 3.2s ease-in-out forwards}
+@keyframes scenery{from{transform:translateX(0)}to{transform:translateX(-66.6%)}}
+.train-track{position:absolute;left:0;right:0;bottom:8px;display:flex;align-items:flex-end;overflow-x:auto;padding:0 1rem}
 .train-track>:first-child{margin-left:auto}
 .train-track>:last-child{margin-right:auto}
-.train-part{font-size:3.5rem;flex:none;white-space:nowrap;animation:bounce .5s ease}
+.train-part{font-size:2.4rem;flex:none;white-space:nowrap;position:relative}
+.train-part.new{animation:bounce .5s ease}
+.train-part.wrong{animation:shake .5s}
+.loco::after{content:'💨';position:absolute;top:-1.2rem;left:-.5rem;font-size:1.4rem;opacity:0}
+.railway.go .loco::after{opacity:1;animation:puff .7s infinite}
+.railway.go .train-part{animation:chug .25s infinite alternate}
 @keyframes bounce{0%{transform:translateY(-30px);opacity:0}60%{transform:translateY(6px)}100%{transform:none;opacity:1}}
-.wagon-picker{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem}
-.wagon-btn{font-size:1.2rem;background:#F1F5F9;border:2px solid #94A3B8;border-radius:1rem;padding:.8rem 1rem;font-weight:bold}
-.wagon-btn.reset{background:var(--red);border-color:var(--red);color:#fff}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes chug{to{transform:translateY(-3px)}}
+@keyframes puff{from{transform:translate(0,0) scale(.6);opacity:.9}to{transform:translate(-14px,-22px) scale(1.2);opacity:0}}
+.confetti{position:absolute;top:-1.5rem;font-size:1.6rem;animation:fall 1.8s linear forwards}
+@keyframes fall{to{transform:translateY(260px) rotate(360deg)}}
+.wagon-picker{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;margin-bottom:.8rem}
+.wagon-btn{font-size:1.1rem;background:#F1F5F9;border:2px solid #94A3B8;border-radius:1rem;padding:.7rem .9rem;min-height:48px;font-weight:bold}
+.train-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem}
+.act-btn{background:#475569;color:#fff;border:none;border-radius:1rem;padding:.8rem 1.2rem;font-weight:bold;font-size:1rem;min-height:48px}

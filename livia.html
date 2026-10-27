@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laboratorio di Livia - Coding & English</title>
 <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/quiz.css">
 <link rel="stylesheet" href="css/livia/base.css">
 <link rel="stylesheet" href="css/livia/coding.css">
 <link rel="stylesheet" href="css/livia/inglese.css">
@@ -18,8 +19,8 @@
 <div class="nav-modules" id="nav">
   <button class="mod-btn active" data-panel="coding">🧩 Lab Coding a Blocchi</button>
   <button class="mod-btn" data-panel="debug">🔎 Trova l'errore</button>
+  <button class="mod-btn" data-panel="math">🧮 Logica e Matematica</button>
   <button class="mod-btn" data-panel="englishWords">🔤 English Words</button>
-  <button class="mod-btn" data-panel="englishColors">🌈 Listen & Pick Colors</button>
 </div>
 
 <main>
@@ -78,18 +79,25 @@
     </div>
   </section>
 
+  <section id="math" class="panel">
+    <h2>🧮 Logica e Matematica</h2>
+    <div id="lMath"></div>
+  </section>
+
   <section id="englishWords" class="panel">
     <h2>🔤 Impara le Parole in Inglese!</h2>
     <div class="word-hud">
       <span>⭐ Livello <span id="wLevel">1</span>: <span id="wLevelName"></span></span>
       <div class="word-bar" id="wBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="wBarFill"></div></div>
       <span id="wProgress">0/5</span>
+      <button class="word-restart" id="wordRestart">🔄 Dal livello 1</button>
     </div>
     <p class="sub" id="wordPrompt"></p>
     <div class="word-card">
       <div class="word-emoji" id="wordEmoji"></div>
       <div class="word-ita" id="wordIta"></div>
       <button class="speak-btn" id="wordSpeak" hidden>🔊 Ascolta</button>
+      <button class="speak-btn" id="wordContinue" hidden>▶️ Continua</button>
     </div>
     <div class="options-grid" id="optionsGrid"></div>
     <div id="tileArea" hidden>
@@ -98,22 +106,15 @@
     </div>
     <div class="status-msg" id="wordStatus" style="margin-top:1.5rem;font-size:1.2rem" aria-live="polite"></div>
   </section>
-
-  <section id="englishColors" class="panel" style="text-align:center">
-    <h2>🎨 Ascolta e Trova il Colore!</h2>
-    <p class="sub">Ascolta la pronuncia in inglese e tocca il colore giusto!</p>
-    <button class="speak-btn" id="speakBtn">🔊 Ascolta la Parola</button>
-    <div class="color-circles" id="colorCircles"></div>
-    <div class="status-msg" id="colorStatus" style="margin-top:2rem;font-size:1.2rem" aria-live="polite"></div>
-  </section>
 </main>
 
 <script src="js/common.js"></script>
+<script src="js/quiz.js"></script>
 <script src="js/livia/robot.js"></script>
 <script src="js/livia/coding.js"></script>
 <script src="js/livia/debug.js"></script>
+<script src="js/livia/matematica.js"></script>
 <script src="js/livia/inglese-parole.js"></script>
-<script src="js/livia/inglese-colori.js"></script>
 <script>initTabs('nav', '.mod-btn', 'panel', '.panel');</script>
 </body>
 </html>

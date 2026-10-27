@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mondo di Pietro - Pompieri & Treni</title>
 <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/quiz.css">
 <link rel="stylesheet" href="css/pietro/base.css">
 <link rel="stylesheet" href="css/pietro/fuoco.css">
 <link rel="stylesheet" href="css/pietro/treno.css">
@@ -20,6 +21,8 @@
 <nav class="nav-tabs" id="tabs">
   <button class="tab-btn active" data-tab="fire">🚒 Spegni il Fuoco!</button>
   <button class="tab-btn" data-tab="train">🚂 Il Treno di Pietro</button>
+  <button class="tab-btn" data-tab="math">🧮 Conta e Completa</button>
+  <button class="tab-btn" data-tab="english">🔤 Inglese con Pietro</button>
   <button class="tab-btn" data-tab="keyboard">⌨️ Tastiera Pompieri & Treni</button>
 </nav>
 
@@ -35,15 +38,41 @@
   </section>
 
   <section id="train" class="game-section">
-    <h2>🚂 Aggancia i Vagoni al Treno!</h2>
-    <p class="hint">Tocca i vagoni sotto per aggiungerli alla locomotiva</p>
-    <div class="train-track" id="trainTrack"></div>
-    <div class="wagon-picker">
-      <button class="wagon-btn" data-wagon="🔴🚃">🔴 Vagone Rosso</button>
-      <button class="wagon-btn" data-wagon="🟡🚃">🟡 Vagone Giallo</button>
-      <button class="wagon-btn" data-wagon="📦📦">📦 Merci</button>
-      <button class="wagon-btn reset" id="trainReset">🔄 Riparti</button>
+    <h2>🚂 Il Treno di Pietro</h2>
+    <div class="train-modes">
+      <button class="mode-btn active" data-mode="mission">📋 Missioni</button>
+      <button class="mode-btn" data-mode="free">🛠️ Costruisci libero</button>
     </div>
+    <div class="order-card" id="orderCard"><b>Il capostazione chiede:</b><span class="order-train" id="orderTrain"></span><span id="missionNum"></span></div>
+    <p class="hint" id="trainHint"></p>
+    <div class="railway" id="railway">
+      <div class="scenery" aria-hidden="true"><span>🌳</span><span>🏠</span><span>🌲</span><span>⛰️</span><span>🌳</span><span>🏠</span><span>🌲</span><span>🌳</span><span>🚉</span></div>
+      <div class="train-track" id="trainTrack"></div>
+    </div>
+    <div class="wagon-picker">
+      <button class="wagon-btn" data-wagon="red">🔴 Rosso</button>
+      <button class="wagon-btn" data-wagon="yellow">🟡 Giallo</button>
+      <button class="wagon-btn" data-wagon="blue">🔵 Blu</button>
+      <button class="wagon-btn" data-wagon="green">🟢 Verde</button>
+      <button class="wagon-btn" data-wagon="box">📦 Merci</button>
+      <button class="wagon-btn" data-wagon="cow">🐮 Animali</button>
+    </div>
+    <div class="train-actions">
+      <button class="big-btn" id="trainGo">🚂 Parti!</button>
+      <button class="act-btn" id="trainUndo">↩️ Togli l'ultimo</button>
+      <button class="act-btn" id="trainReset">🔄 Svuota</button>
+    </div>
+    <div class="msg" id="trainMsg" aria-live="polite"></div>
+  </section>
+
+  <section id="math" class="game-section">
+    <h2>🧮 Conta e Completa!</h2>
+    <div id="pMath"></div>
+  </section>
+
+  <section id="english" class="game-section">
+    <h2>🔤 Inglese con Pietro!</h2>
+    <div id="pEng"></div>
   </section>
 
   <section id="keyboard" class="game-section">
@@ -59,8 +88,11 @@
 </main>
 
 <script src="js/common.js"></script>
+<script src="js/quiz.js"></script>
 <script src="js/pietro/fuoco.js"></script>
 <script src="js/pietro/treno.js"></script>
+<script src="js/pietro/matematica.js"></script>
+<script src="js/pietro/inglese.js"></script>
 <script src="js/pietro/tastiera.js"></script>
 <script>initTabs('tabs', '.tab-btn', 'tab', '.game-section');</script>
 </body>
