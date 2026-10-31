@@ -12,7 +12,7 @@
     const others = shuffle(list.filter(x => x !== t)).slice(0, opts - 1);
     return { id: kind + t[0], prompt: 'Ascolta e tocca quello giusto!', big: '👂', bigClass: 'emoji', lang: 'en-US',
       say: t[0], sayOk: `Yes! ${t[0]}! Well done!`, okMsg: t[0] + '!', optClass: cls,
-      options: [t, ...others].map(x => ({ label: render(x), ok: x === t, say: x[0] })) };
+      options: [t, ...others].map(x => ({ label: render(x), html: String(render(x)).startsWith('<'), ok: x === t, say: x[0] })) };
   };
   const dot = c => `<span class="dot" style="background:${c[1]}"></span>`;
   const em = x => x[1];

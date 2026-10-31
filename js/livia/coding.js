@@ -124,5 +124,6 @@
     $('runBtn').disabled = $('clearBtn').disabled = false;
   };
 
+  document.addEventListener('tabchange', e => { if (e.detail === 'coding' && !running) loadLevel(cur); });  // il robot si posiziona solo se la scheda è visibile
   loadLevel(cur);
 })();

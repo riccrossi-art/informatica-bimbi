@@ -13,15 +13,23 @@ Funziona direttamente nel browser, senza installare nulla, anche su iPad.
 
 ## 🎮 Contenuti
 
-| Pagina | Per chi | Sezioni |
+Ogni pagina si apre con un **menù di aree**: si sceglie l'area (carte grandi) e poi uno dei giochi dell'area. Il pulsante **🏠 Menu** riporta alla scelta delle aree.
+
+| Pagina | Area | Giochi |
 |---|---|---|
-| [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Tutti | Home con i collegamenti ai giochi e la nota per i genitori |
-| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | Pietro | Spegni il Fuoco, Il Treno di Pietro (missioni), Conta e Completa, Inglese con Pietro, Tastiera Pompieri & Treni |
-| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | Livia | Coding a blocchi (12 livelli), Trova l'errore, Logica e Matematica, English Words |
+| [`index.html`](https://riccrossi-art.github.io/informatica-bimbi/index.html) | Home | Collegamenti a Pietro e Livia, nota per i genitori |
+| [`pietro.html`](https://riccrossi-art.github.io/informatica-bimbi/pietro.html) | 🚒 Pompieri e Treni | Spegni il Fuoco, Il Treno di Pietro |
+| | 🧮 Numeri e Logica | Conta e Completa |
+| | 🔤 Inglese | Inglese con Pietro |
+| | ⌨️ Lettere | Tastiera Pompieri & Treni |
+| [`livia.html`](https://riccrossi-art.github.io/informatica-bimbi/livia.html) | 💻 Coding | Lab Coding (12 livelli), Trova l'errore |
+| | 🧮 Logica e Matematica | Calcoli e tabelline, Numeri, Orologio ed Euro, Figure e Misure, Logica |
+| | 🔤 Inglese | Parole, Frasi |
+| | 📚 Italiano | Ortografia, Grammatica, Parole e Lettura |
 
 ## 🗂️ Struttura del progetto
 
-Ogni gioco ha il suo file JavaScript e il suo file CSS. Le pagine HTML contengono solo la struttura e collegano i file che servono.
+Ogni gioco ha il suo file JavaScript; le pagine HTML contengono solo la struttura e collegano i file che servono.
 
 ```
 index.html              home (collegamenti ai giochi)
@@ -29,23 +37,20 @@ pietro.html             pagina di Pietro
 livia.html              pagina di Livia
 css/
   common.css            stili comuni (reset, pulsanti, iPad)
+  menu.css              menù delle aree
   quiz.css              stili dei quiz a livelli
   pietro/               base, fuoco, treno, tastiera
   livia/                base, coding, inglese (binario.css non collegato)
 js/
-  common.js             voce, schede, funzioni condivise
+  common.js             voce, schede, menù delle aree, funzioni condivise
   quiz.js               motore dei quiz a livelli (stelle, livelli, riavvio)
-  pietro/               fuoco.js, treno.js, matematica.js, inglese.js, tastiera.js
-  livia/                robot.js (motore, livelli e robot Byte), coding.js, debug.js,
-                        matematica.js, inglese-parole.js
+  pietro/               fuoco, treno, matematica, inglese, tastiera
+  livia/                robot, coding, debug, matematica, numeri, orologio,
+                        geometria, logica, inglese-parole, inglese-frasi, italiano
                         (binario.js e password.js: nascosti, non collegati)
 ```
 
-**Giochi nascosti**: Pixel & Codice Binario e Sicurezza Password sono ancora nel repository ma non compaiono in `livia.html`. Per riattivarli, ripristina nella pagina il pulsante della scheda, la sezione HTML (`id="binary"` e `id="cyber"`) e i collegamenti a `binario.css`, `binario.js` e `password.js`.
-
-**Aggiungere o cambiare livelli**: i livelli di Byte sono nell'elenco `LEVELS` di `js/livia/robot.js`. Ogni livello ha una soluzione di riferimento (`sol`) che decide le 3 stelle e il massimo di blocchi (`max`). Gli errori da trovare sono in `PUZZLES` di `js/livia/debug.js`.
-
-**Come aggiungere un gioco**: crea `js/<pagina>/nuovo.js` (e, se serve, `css/<pagina>/nuovo.css`), aggiungi la sezione e il pulsante della scheda nella pagina HTML e collega i due file. I giochi si accorgono del cambio scheda con l'evento `tabchange` (vedi `js/common.js`).
+**Aggiungere un quiz**: crea `js/livia/nuovo.js` con `Quiz.mount({ el, key, tab, levels })` (vedi un file esistente), aggiungi la sezione e il pulsante (con `data-area`) nella pagina HTML e collega lo script. **Aggiungere un'area**: aggiungi una carta `.area-card` con `data-area` nel menù e usa lo stesso `data-area` sui pulsanti dei giochi.
 
 > I nomi dei file devono coincidere con i link nella home. GitHub Pages distingue maiuscole e minuscole.
 
@@ -55,7 +60,14 @@ js/
 - **Trova l'errore**: 7 programmi di Byte sbagliati da correggere (cambiando o togliendo un blocco, oppure il numero di ripetizioni).
 - **Spegni il Fuoco**: si parte da 3 casette e 30 secondi. Se le spegni tutte in tempo passi al livello successivo (4 casette, poi 5 e così via, fino a 12).
 - **English Words a livelli**: 5 livelli che salgono dopo 5 risposte giuste al primo tentativo. Si parte da 3 scelte con disegno (Beginner), poi 4 scelte (Explorer), senza disegno (Reader), ascoltando la parola (Listener) e infine scrivendola con le lettere (Spelling Star). Il livello raggiunto resta salvato sul dispositivo. Il vocabolario ha oltre 120 parole in 3 fasce di difficoltà: le parole escono a caso, mai quelle appena viste, e il gioco ricorda quelle già incontrate (anche nelle partite successive) per variare sempre. Tra un livello e l'altro compare una schermata che spiega la novità, e un pulsante **🔄 Dal livello 1** (con doppio tocco di conferma) permette di ricominciare.
-- **Logica e Matematica (Livia)**: 5 livelli che salgono con le risposte giuste: addizioni e sottrazioni fino a 20, serie di numeri, tabelline, numeri e segni mancanti, e infine problemi, intrusi e confronti.
+- **Logica e Matematica (Livia)**, pensata per la seconda elementare, in 5 giochi a 5 livelli ciascuno (stelle e livello salvati sul dispositivo):
+  - *Calcoli e tabelline*: addizioni e sottrazioni, serie, tabelline, segni mancanti, problemi.
+  - *Numeri*: valore delle cifre, prima e dopo, confronti fino a 999, pari/dispari, doppio e metà, composizione.
+  - *Orologio ed Euro*: leggere l'ora su un orologio disegnato (ore, mezze, quarti, minuti), somma di monete e resto.
+  - *Figure e Misure*: lati delle figure, riconoscere le figure, metri/centimetri, chili/grammi/litri, perimetro.
+  - *Logica*: serie di figure, gruppi che crescono, indovinelli numerici, chi è il più veloce, ordini.
+- **Inglese (Livia)**: *Parole* a 5 livelli con 128 parole, e *Frasi* (saluti, completa la frase, domande e risposte, traduzioni, ascolto di frasi intere).
+- **Italiano (Livia)**, per la seconda elementare: *Ortografia* (gn/gl/sc, parole scritte bene, è/e, ho/hai/ha/hanno, punteggiatura), *Grammatica* (plurali, articoli, nomi/aggettivi/verbi, tempi dei verbi, accordo), *Parole e Lettura* (contrari, sinonimi, intruso, sillabe, comprensione del testo).
 - **Conta e Completa (Pietro)**: contare i mezzi dei pompieri e dei treni, completare serie di disegni e capire dove ce n'è di più o di meno. Nessuna lettura richiesta, con la voce.
 - **Inglese con Pietro**: si ascolta una parola in inglese e si tocca l'immagine giusta: colori, animali, pompieri e treni, numeri.
 - **Il Treno di Pietro**: il capostazione chiede un treno con vagoni in un certo ordine (8 missioni); in alternativa si costruisce liberamente. Alla partenza il treno viaggia per circa 5 secondi tra alberi e case, sbuffa e arriva in stazione con una pioggia di stelle.

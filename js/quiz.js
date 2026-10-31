@@ -16,6 +16,11 @@ const Quiz = (() => {
     return [{ label: ans, ok: true }, ...others.map(x => ({ label: x }))];
   }
 
+  function choice(ans, pool, n = 4) {      // risposta giusta + distrattori presi da un elenco
+    const wrong = shuffle([...new Set(pool)].filter(x => x !== ans)).slice(0, n - 1);
+    return [{ label: ans, ok: true }, ...wrong.map(x => ({ label: x }))];
+  }
+
   const TPL = `<div class="qz-hud"><span>⭐ Livello <b class="qz-lv">1</b>: <span class="qz-name"></span></span>
     <div class="qz-bar" role="progressbar" aria-valuemin="0"><div class="qz-fill"></div></div><span class="qz-prog"></span>
     <button class="qz-restart">🔄 Dal livello 1</button></div>
@@ -50,16 +55,17 @@ const Quiz = (() => {
       q$('.qz-prompt').textContent = q.prompt;
       const big = q$('.qz-big');
       big.className = 'qz-big ' + (q.bigClass || '');
-      big.textContent = q.big;
+      if (q.html) big.innerHTML = q.html; else big.textContent = q.big;
       show(q$('.qz-say'), !!(cfg.lang && q.say)); show(q$('.qz-go'), false);
       setStatus(status, '');
       const box = q$('.qz-options');
       box.innerHTML = '';
+      box.style.gridTemplateColumns = q.cols || '';
       show(box, true);
       shuffle([...q.options]).forEach(o => {
         const b = document.createElement('button');
         b.className = 'qz-opt ' + (q.optClass || '');
-        b.innerHTML = o.label;
+        if (o.html) b.innerHTML = o.label; else b.textContent = o.label;
         b._o = o;
         box.appendChild(b);
       });
@@ -116,5 +122,5 @@ const Quiz = (() => {
     };
     document.addEventListener('tabchange', e => { if (e.detail === cfg.tab && !cur) next(); });
   }
-  return { mount, rnd, pick, numOptions };
+  return { mount, rnd, pick, numOptions, choice };
 })();

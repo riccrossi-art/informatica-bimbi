@@ -6,6 +6,7 @@
 <title>Laboratorio di Livia - Coding & English</title>
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/quiz.css">
+<link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/livia/base.css">
 <link rel="stylesheet" href="css/livia/coding.css">
 <link rel="stylesheet" href="css/livia/inglese.css">
@@ -16,11 +17,27 @@
   <h2>🚀 Lab di Livia</h2>
 </header>
 
+<div class="area-menu" id="areaMenu">
+  <button class="area-card" data-area="coding" style="--c:#6366F1"><span class="ico">💻</span><b>Coding</b><small>Guida Byte e trova gli errori</small></button>
+  <button class="area-card" data-area="math" style="--c:#10B981"><span class="ico">🧮</span><b>Logica e Matematica</b><small>Calcoli, numeri, orologio, figure, logica</small></button>
+  <button class="area-card" data-area="english" style="--c:#F59E0B"><span class="ico">🔤</span><b>Inglese</b><small>Parole e prime frasi</small></button>
+  <button class="area-card" data-area="italiano" style="--c:#EC4899"><span class="ico">📚</span><b>Italiano</b><small>Ortografia, grammatica, lettura</small></button>
+</div>
+<div class="area-bar" id="areaBar" hidden><button class="back-btn" id="areaBack">🏠 Menu</button><span id="areaTitle"></span></div>
+
 <div class="nav-modules" id="nav">
-  <button class="mod-btn active" data-panel="coding">🧩 Lab Coding a Blocchi</button>
-  <button class="mod-btn" data-panel="debug">🔎 Trova l'errore</button>
-  <button class="mod-btn" data-panel="math">🧮 Logica e Matematica</button>
-  <button class="mod-btn" data-panel="englishWords">🔤 English Words</button>
+  <button class="mod-btn" data-panel="coding" data-area="coding">🧩 Lab Coding</button>
+  <button class="mod-btn" data-panel="debug" data-area="coding">🔎 Trova l'errore</button>
+  <button class="mod-btn" data-panel="math" data-area="math">🧮 Calcoli</button>
+  <button class="mod-btn" data-panel="numeri" data-area="math">🔢 Numeri</button>
+  <button class="mod-btn" data-panel="orologio" data-area="math">🕒 Orologio ed Euro</button>
+  <button class="mod-btn" data-panel="geometria" data-area="math">📐 Figure e Misure</button>
+  <button class="mod-btn" data-panel="logica" data-area="math">🧠 Logica</button>
+  <button class="mod-btn" data-panel="englishWords" data-area="english">🔤 Parole</button>
+  <button class="mod-btn" data-panel="frasi" data-area="english">💬 Frasi</button>
+  <button class="mod-btn" data-panel="ortografia" data-area="italiano">✏️ Ortografia</button>
+  <button class="mod-btn" data-panel="grammatica" data-area="italiano">🧩 Grammatica</button>
+  <button class="mod-btn" data-panel="parole" data-area="italiano">📖 Parole e Lettura</button>
 </div>
 
 <main>
@@ -80,8 +97,48 @@
   </section>
 
   <section id="math" class="panel">
-    <h2>🧮 Logica e Matematica</h2>
+    <h2>🧮 Calcoli e Tabelline</h2>
     <div id="lMath"></div>
+  </section>
+
+  <section id="numeri" class="panel">
+    <h2>🔢 Numeri fino a 999</h2>
+    <div id="lNum"></div>
+  </section>
+
+  <section id="orologio" class="panel">
+    <h2>🕒 Orologio ed Euro</h2>
+    <div id="lClock"></div>
+  </section>
+
+  <section id="geometria" class="panel">
+    <h2>📐 Figure e Misure</h2>
+    <div id="lGeo"></div>
+  </section>
+
+  <section id="logica" class="panel">
+    <h2>🧠 Logica</h2>
+    <div id="lLogic"></div>
+  </section>
+
+  <section id="frasi" class="panel">
+    <h2>💬 English Phrases: le prime frasi</h2>
+    <div id="lFrasi"></div>
+  </section>
+
+  <section id="ortografia" class="panel">
+    <h2>✏️ Ortografia</h2>
+    <div id="lOrt"></div>
+  </section>
+
+  <section id="grammatica" class="panel">
+    <h2>🧩 Grammatica</h2>
+    <div id="lGram"></div>
+  </section>
+
+  <section id="parole" class="panel">
+    <h2>📖 Parole e Lettura</h2>
+    <div id="lParole"></div>
   </section>
 
   <section id="englishWords" class="panel">
@@ -114,7 +171,16 @@
 <script src="js/livia/coding.js"></script>
 <script src="js/livia/debug.js"></script>
 <script src="js/livia/matematica.js"></script>
+<script src="js/livia/numeri.js"></script>
+<script src="js/livia/orologio.js"></script>
+<script src="js/livia/geometria.js"></script>
+<script src="js/livia/logica.js"></script>
+<script src="js/livia/inglese-frasi.js"></script>
+<script src="js/livia/italiano.js"></script>
 <script src="js/livia/inglese-parole.js"></script>
-<script>initTabs('nav', '.mod-btn', 'panel', '.panel');</script>
+<script>
+initTabs('nav', '.mod-btn', 'panel', '.panel');
+initAreas({ menu: 'areaMenu', bar: 'areaBar', title: 'areaTitle', back: 'areaBack', nav: 'nav', btnSel: '.mod-btn', secSel: '.panel' });
+</script>
 </body>
 </html>

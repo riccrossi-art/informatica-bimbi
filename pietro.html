@@ -6,6 +6,7 @@
 <title>Mondo di Pietro - Pompieri & Treni</title>
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/quiz.css">
+<link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/pietro/base.css">
 <link rel="stylesheet" href="css/pietro/fuoco.css">
 <link rel="stylesheet" href="css/pietro/treno.css">
@@ -18,12 +19,20 @@
   <button id="muteBtn" aria-pressed="false">🔊 Voce</button>
 </header>
 
+<div class="area-menu" id="areaMenu">
+  <button class="area-card" data-area="pompieri" style="--c:#EF4444"><span class="ico">🚒</span><b>Pompieri e Treni</b><small>Spegni il fuoco, guida il treno</small></button>
+  <button class="area-card" data-area="numeri" style="--c:#0284C7"><span class="ico">🧮</span><b>Numeri e Logica</b><small>Conta e completa</small></button>
+  <button class="area-card" data-area="english" style="--c:#16A34A"><span class="ico">🔤</span><b>Inglese</b><small>Le prime parole</small></button>
+  <button class="area-card" data-area="lettere" style="--c:#F59E0B"><span class="ico">⌨️</span><b>Lettere</b><small>La tastiera magica</small></button>
+</div>
+<div class="area-bar" id="areaBar" hidden><button class="back-btn" id="areaBack">🏠 Menu</button><span id="areaTitle"></span></div>
+
 <nav class="nav-tabs" id="tabs">
-  <button class="tab-btn active" data-tab="fire">🚒 Spegni il Fuoco!</button>
-  <button class="tab-btn" data-tab="train">🚂 Il Treno di Pietro</button>
-  <button class="tab-btn" data-tab="math">🧮 Conta e Completa</button>
-  <button class="tab-btn" data-tab="english">🔤 Inglese con Pietro</button>
-  <button class="tab-btn" data-tab="keyboard">⌨️ Tastiera Pompieri & Treni</button>
+  <button class="tab-btn" data-tab="fire" data-area="pompieri">🚒 Spegni il Fuoco!</button>
+  <button class="tab-btn" data-tab="train" data-area="pompieri">🚂 Il Treno di Pietro</button>
+  <button class="tab-btn" data-tab="math" data-area="numeri">🧮 Conta e Completa</button>
+  <button class="tab-btn" data-tab="english" data-area="english">🔤 Inglese con Pietro</button>
+  <button class="tab-btn" data-tab="keyboard" data-area="lettere">⌨️ Tastiera Pompieri & Treni</button>
 </nav>
 
 <main>
@@ -94,6 +103,7 @@
 <script src="js/pietro/matematica.js"></script>
 <script src="js/pietro/inglese.js"></script>
 <script src="js/pietro/tastiera.js"></script>
-<script>initTabs('tabs', '.tab-btn', 'tab', '.game-section');</script>
+<script>initTabs('tabs', '.tab-btn', 'tab', '.game-section');
+initAreas({ menu: 'areaMenu', bar: 'areaBar', title: 'areaTitle', back: 'areaBack', nav: 'tabs', btnSel: '.tab-btn', secSel: '.game-section' });</script>
 </body>
 </html>

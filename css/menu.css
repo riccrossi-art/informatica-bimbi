@@ -1,0 +1,11 @@
+/* Menù delle aree (valido per il tema chiaro di Pietro e quello scuro di Livia) */
+.area-menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;max-width:950px;width:100%;padding:1.2rem 1rem}
+.area-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;padding:1.4rem 1rem;min-height:160px;border-radius:1.5rem;border:3px solid var(--c,#8B5CF6);background:rgba(127,127,127,.12);color:inherit;text-align:center}
+.area-card .ico{font-size:3.2rem;line-height:1}
+.area-card b{font-size:1.3rem}
+.area-card small{opacity:.8;font-size:.95rem}
+.area-card:active{transform:scale(.97)}
+.area-bar{display:flex;align-items:center;gap:1rem;max-width:950px;width:100%;padding:.8rem 1rem 0}
+.back-btn{background:rgba(127,127,127,.25);border:none;border-radius:1rem;padding:.7rem 1.1rem;font-weight:bold;min-height:48px}
+#areaTitle{font-size:1.3rem;font-weight:bold}
+.nav-modules,.nav-tabs{flex-wrap:wrap;overflow-x:visible}

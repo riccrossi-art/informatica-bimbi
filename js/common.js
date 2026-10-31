@@ -41,3 +41,27 @@ function initTabs(navId, btnSel, key, secSel) {
     document.dispatchEvent(new CustomEvent('tabchange', { detail: id }));
   });
 }
+
+/* Menù per aree: prima si sceglie l'area (carte grandi), poi uno dei giochi dell'area */
+function initAreas(cfg) {
+  const show = (el, on) => { el.hidden = !on; el.style.display = on ? '' : 'none'; };
+  const menu = $(cfg.menu), bar = $(cfg.bar), nav = $(cfg.nav);
+  const btns = [...document.querySelectorAll(cfg.btnSel)], secs = document.querySelectorAll(cfg.secSel);
+  function home() {
+    secs.forEach(s => s.classList.remove('active'));
+    btns.forEach(b => b.classList.remove('active'));
+    show(menu, true); show(bar, false); show(nav, false);
+    document.dispatchEvent(new CustomEvent('tabchange', { detail: null }));
+  }
+  function open(card) {
+    const mine = btns.filter(b => b.dataset.area === card.dataset.area);
+    $(cfg.title).textContent = card.querySelector('.ico').textContent + ' ' + card.querySelector('b').textContent;
+    show(menu, false); show(bar, true);
+    btns.forEach(b => show(b, mine.includes(b)));
+    show(nav, mine.length > 1);
+    mine[0].click();
+  }
+  menu.addEventListener('click', e => { const c = e.target.closest('.area-card'); if (c) open(c); });
+  $(cfg.back).onclick = home;
+  home();
+}
